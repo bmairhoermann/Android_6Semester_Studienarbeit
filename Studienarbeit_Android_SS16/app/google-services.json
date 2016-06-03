@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "905577188101",
+    "project_id": "studienarbeit-android-ss16"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905577188101:android:4c262397d4a0d8bf",
+        "android_client_info": {
+          "package_name": "de.hof_university.studienarbeitss16.studienarbeit_android_ss16"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905577188101-sd87mdpt2ip2aqtajeopo6ikf3dktgfr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.hof_university.studienarbeitss16.studienarbeit_android_ss16",
+            "certificate_hash": "C4B009A8A8B4F6B9118075014F541FC1472D31F6"
+          }
+        },
+        {
+          "client_id": "905577188101-bd6ilh7a3ul0e4h3trihpelbnh41m2ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFc0-A4c8MeYfP_lRY7U7WDjmz7p5lX14"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
