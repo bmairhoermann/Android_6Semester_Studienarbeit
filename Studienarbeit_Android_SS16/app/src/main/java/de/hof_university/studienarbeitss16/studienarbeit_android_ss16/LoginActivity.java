@@ -2,6 +2,7 @@ package de.hof_university.studienarbeitss16.studienarbeit_android_ss16;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,8 @@ import com.google.android.gms.common.api.Status;
 import com.facebook.FacebookSdk;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
 
@@ -43,6 +46,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize FacebookSDK BEFORE setContentView -> otherwise inflating the loginButton fails
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_login);
 
 
@@ -69,56 +76,40 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         SignInButton signInButton = (SignInButton) findViewById(R.id.google_sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
-        //***********************************End*************************************
+        //***********************************Google End*************************************
+
+
+
+
 
         //**********************************Facebook*********************************
-        FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
 
-        // Initialize Facebook SDK
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
-        /*
+        callbackManager = CallbackManager.Factory.create();
         facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
-        facebookLoginButton.setReadPermissions("user_friends");
+        List<String> permissions = new ArrayList<String>();
+        permissions.add("user_friends");
+        permissions.add("email");
+        facebookLoginButton.setReadPermissions(permissions);
 
         // Callback registration
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
+                Log.d(TAG, "onSuccess: Facebooklogin success");
             }
 
             @Override
             public void onCancel() {
-                // App code
+                Log.d(TAG, "onCancel: Facebooklogin cancel");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
+                Log.d(TAG, "onError: Facebooklogin error");
             }
-        });*/
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-        //************************************End************************************
+        });
+        //************************************Facebook End************************************
     }
 
     @Override
@@ -270,5 +261,5 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         startActivity(intent);
     }
 
-    
+
 }
