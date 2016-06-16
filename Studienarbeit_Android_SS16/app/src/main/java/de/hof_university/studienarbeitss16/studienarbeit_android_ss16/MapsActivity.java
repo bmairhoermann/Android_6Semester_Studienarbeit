@@ -84,8 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Enable usertracking if GPS is enabled
         if(displayGpsStatus()){
-            //locationListener = new MyLocationListener();
-
             try {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
             }catch (SecurityException e){
@@ -105,7 +103,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("EndedTracK", "startOrEndTrack: Collection Count: " + trackCollection.trackCollectionList.size());
         }else {
             if (displayGpsStatus()){
-                //locationListener = new MyLocationListener();
                 try {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
                 }catch (SecurityException e){
@@ -183,7 +180,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public  void onLocationChanged(Location loc){
 
-            /// BUG!!!!: Linie nach latLatLng?????
             // Move Camera with User
             if(followUser) {
                 LatLng currentPosition = new LatLng(loc.getLatitude(), loc.getLongitude());
@@ -195,7 +191,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(isFirstPosition){
                     lastLatLng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude());
                     mMap.addMarker(new MarkerOptions().position(lastLatLng.toGoogleLatLng()).title("Startpunkt"));
-                    //lastLatLng = currentLatLng;
                     isFirstPosition = false;
                     trackModel.firstPosition = new LatitudeLongitudeModel(lastLatLng.latitude, lastLatLng.longitude);
 
@@ -215,16 +210,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         trackModel.lastPosition = newLatLong;
                         trackModel.title = "Test";
                         mMap.addMarker(new MarkerOptions().position(newLatLong.toGoogleLatLng()).title("Endpunkt"));
-                        // Saving Track to Collection
                         trackCollection.trackCollectionList.add(trackModel);
                     }
                 }
             }
         }
 
-        public void endTrack(){
-
-        }
 
         @Override
         public void onProviderDisabled(String provider) {}
