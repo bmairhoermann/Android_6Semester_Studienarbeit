@@ -13,20 +13,34 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.app.AlertDialog;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackCollection;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private LocationManager locationManager=null;
     private LocationListener locationListener=null;
+    private Boolean isTracking = false;
+    private Boolean isFirstPosition = true;
+    private Boolean isLastPosition = false;
+    private Boolean followUser = true;
+    private Button trackButton;
+    private TrackCollection trackCollection;
+    private TrackModel trackModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +52,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        trackButton = (Button)findViewById(R.id.trackButton);
+
+        trackCollection = new TrackCollection();
+        locationListener = new MyLocationListener();
+
     }
+
 
 
     /**
@@ -55,19 +75,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
+
+        /*
         LatLng hof = new LatLng(50.3113026,11.8542196);
         mMap.addMarker(new MarkerOptions().position(hof).title("Marker in Hof"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hof, (float) 10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hof, (float) 15));
+        */
 
+        // Enable usertracking if GPS is enabled
         if(displayGpsStatus()){
-            locationListener = new MyLocationListener();
+            //locationListener = new MyLocationListener();
+
             try {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
             }catch (SecurityException e){
-                Log.d("MapsActivity", "onMapReady: Not able to request location updates");
+                Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
             }
         }else {
-            alertbox("Gps Status!!", "Your GPS is: OFF");
+            alertbox("GPS Status", "GPS ist: AUS");
+        }
+    }
+
+    public void startOrEndTrack(View view){
+        if(isTracking){
+            // Clean for next Track
+            isLastPosition = true;
+            trackButton.setText("Route starten");
+
+            Log.d("EndedTracK", "startOrEndTrack: Collection Count: " + trackCollection.trackCollectionList.size());
+        }else {
+            if (displayGpsStatus()){
+                //locationListener = new MyLocationListener();
+                try {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
+                }catch (SecurityException e){
+                    Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
+                }
+                trackButton.setText("Route beenden");
+                isTracking = true;
+                isFirstPosition = true;
+                isLastPosition = false;
+                followUser = true;
+                trackModel = new TrackModel();
+            }else{
+                alertbox("GPS Status", "GPS ist: AUS");
+            }
+
         }
 
     }
@@ -75,10 +128,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /*----------Method to create an AlertBox ------------- */
     protected void alertbox(String title, String mymessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your Device's GPS is Disable")
+        builder.setMessage(mymessage)
                 .setCancelable(false)
-                .setTitle("** Gps Status **")
-                .setPositiveButton("Gps On",
+                .setTitle(title)
+                .setPositiveButton("GPS AN",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // finish the current activity
@@ -89,7 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 dialog.cancel();
                             }
                         })
-                .setNegativeButton("Cancel",
+                .setNegativeButton("Abbrechen",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // cancel the dialog box
@@ -115,18 +168,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private class MyLocationListener implements LocationListener {
 
-        LatLng lastLatLng = new LatLng(50.311232, 11.8542196);
+
+
+
+    public class MyLocationListener implements LocationListener {
+
+        int GPS_STATUS = 0;
+
+        LatitudeLongitudeModel lastLatLng;
+        LatitudeLongitudeModel currentLatLng;
+        LatitudeLongitudeModel newLatLong;
 
         @Override
         public  void onLocationChanged(Location loc){
-            LatLng newLatLong = new LatLng(loc.getLatitude(), loc.getLongitude());
-            mMap.addPolyline(new PolylineOptions()
-                    .add(lastLatLng, newLatLong)
-                    .width(5)
-                    .color(Color.RED));
-            lastLatLng = newLatLong;
+
+            /// BUG!!!!: Linie nach latLatLng?????
+            // Move Camera with User
+            if(followUser) {
+                LatLng currentPosition = new LatLng(loc.getLatitude(), loc.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(currentPosition, (float) 17, (float) 0, (float) 0)));
+            }
+
+            // Handle Tracking
+            if(isTracking){
+                if(isFirstPosition){
+                    lastLatLng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(lastLatLng.toGoogleLatLng()).title("Startpunkt"));
+                    //lastLatLng = currentLatLng;
+                    isFirstPosition = false;
+                    trackModel.firstPosition = new LatitudeLongitudeModel(lastLatLng.latitude, lastLatLng.longitude);
+
+                }else {
+                    newLatLong = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude());
+
+                    mMap.addPolyline(new PolylineOptions()
+                            .add(lastLatLng.toGoogleLatLng(), newLatLong.toGoogleLatLng())
+                            .width(10)
+                            .color(Color.RED));
+                    trackModel.trackList.add(newLatLong);
+                    lastLatLng = newLatLong;
+
+                    if(isLastPosition){
+                        // Set isTracking false here, so no more updates for the Track will be made
+                        isTracking = false;
+                        trackModel.lastPosition = newLatLong;
+                        trackModel.title = "Test";
+                        mMap.addMarker(new MarkerOptions().position(newLatLong.toGoogleLatLng()).title("Endpunkt"));
+                        // Saving Track to Collection
+                        trackCollection.trackCollectionList.add(trackModel);
+                    }
+                }
+            }
+        }
+
+        public void endTrack(){
+
         }
 
         @Override
@@ -136,7 +233,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public void onProviderEnabled(String provider) {}
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            //Status:
+            //public static final int OUT_OF_SERVICE = 0;
+            //public static final int TEMPORARILY_UNAVAILABLE = 1;
+            //public static final int AVAILABLE = 2;
+            GPS_STATUS = status;
+
+            // Catch when User looses GPS-Connection and turns of Tracking
+            if (GPS_STATUS == 1 || GPS_STATUS == 0){
+                if (isLastPosition == true){
+                    isTracking = false;
+                    trackModel.lastPosition = newLatLong;
+                    trackModel.title = "Test";
+                    mMap.addMarker(new MarkerOptions().position(newLatLong.toGoogleLatLng()).title("Endpunkt"));
+                    // Saving Track to Collection
+                    trackCollection.trackCollectionList.add(trackModel);
+                }
+            }
+
+        }
 
     }
 }
