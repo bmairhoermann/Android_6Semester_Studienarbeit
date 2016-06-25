@@ -1,8 +1,7 @@
-package de.hof_university.studienarbeitss16.studienarbeit_android_ss16;
+package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -28,9 +26,10 @@ import com.google.android.gms.common.api.Status;
 
 import com.facebook.FacebookSdk;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
 

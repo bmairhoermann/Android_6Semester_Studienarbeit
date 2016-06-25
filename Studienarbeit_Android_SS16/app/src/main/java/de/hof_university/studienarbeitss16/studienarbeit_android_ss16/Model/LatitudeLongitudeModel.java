@@ -10,10 +10,12 @@ import java.io.Serializable;
 public class LatitudeLongitudeModel implements Serializable{
     public double latitude;
     public double longitude;
+    public float speed;
 
-    public LatitudeLongitudeModel(double latitude, double longitude){
+    public LatitudeLongitudeModel(double latitude, double longitude, float speed){
         this.latitude = latitude;
         this.longitude = longitude;
+        this.speed = speed;
     }
 
     public LatLng toGoogleLatLng(){

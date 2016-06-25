@@ -1,4 +1,4 @@
-package de.hof_university.studienarbeitss16.studienarbeit_android_ss16;
+package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -15,32 +15,43 @@ import android.util.Log;
 import android.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.LocationController;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.MapController;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.TrackController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackCollection;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private LocationManager locationManager=null;
-    private LocationListener locationListener=null;
     private Boolean isTracking = false;
-    private Boolean isFirstPosition = true;
-    private Boolean isLastPosition = false;
-    private Boolean followUser = true;
     private Button trackButton;
     private TrackCollection trackCollection;
     private TrackModel trackModel;
+    private TextView speedTextView;
+
+    private Marker userMarker;
+
+    // ControllerClasses
+    private MapController mapController = null;
+    private TrackController trackController = null;
+    private LocationController locationController = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +64,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         trackButton = (Button)findViewById(R.id.trackButton);
+        speedTextView = (TextView)findViewById(R.id.speedText);
 
         trackCollection = new TrackCollection();
-        locationListener = new MyLocationListener();
+        //locationListener = new MyLocationListener();
+
 
     }
 
@@ -74,8 +87,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        mapController = new MapController(mMap);
+        trackController = new TrackController(mapController, this);
+        locationController = new LocationController(trackController, mapController);
 
+        /*
+        MarkerOptions userMarkerOptions = new MarkerOptions().position(new LatLng(50.3113026,11.8542196));
+        userMarker = mMap.addMarker(userMarkerOptions);
+
+        userMarker.setVisible(false);
+        userMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user_position));
+
+        // Add a marker in Sydney and move the camera
         /*
         LatLng hof = new LatLng(50.3113026,11.8542196);
         mMap.addMarker(new MarkerOptions().position(hof).title("Marker in Hof"));
@@ -85,7 +108,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Enable usertracking if GPS is enabled
         if(displayGpsStatus()){
             try {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
+                //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationController);
             }catch (SecurityException e){
                 Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
             }
@@ -96,28 +120,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void startOrEndTrack(View view){
         if(isTracking){
-            // Clean for next Track
-            isLastPosition = true;
+            trackController.endTrack();
+            isTracking = false;
             trackButton.setText("Route starten");
-
-            Log.d("EndedTracK", "startOrEndTrack: Collection Count: " + trackCollection.trackCollectionList.size());
         }else {
-            if (displayGpsStatus()){
-                try {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
-                }catch (SecurityException e){
-                    Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
-                }
-                trackButton.setText("Route beenden");
-                isTracking = true;
-                isFirstPosition = true;
-                isLastPosition = false;
-                followUser = true;
-                trackModel = new TrackModel();
-            }else{
-                alertbox("GPS Status", "GPS ist: AUS");
-            }
-
+            trackController.startTrack();
+            isTracking = true;
+            trackButton.setText("Route beenden");
         }
 
     }
@@ -165,9 +174,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    public TrackModel displaySaveDialog(final TrackModel trackModel){
+        new AlertDialog.Builder(this)
+                .setTitle("Save Track")
+                .setMessage("Startpoint: " + trackModel.firstPosition + ", Entpoint: " + trackModel.lastPosition + ", Tracksize: " + trackModel.trackList.size())
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        mapController.clearMap();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        mapController.clearMap();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+        return trackModel;
+    }
 
 
-
+/*
 
     public class MyLocationListener implements LocationListener {
 
@@ -183,7 +212,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Move Camera with User
             if(followUser) {
                 LatLng currentPosition = new LatLng(loc.getLatitude(), loc.getLongitude());
+                if(!userMarker.isVisible()){
+                    userMarker.setVisible(true);
+                }
+                userMarker.setPosition(currentPosition);
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(currentPosition, (float) 17, (float) 0, (float) 0)));
+
             }
 
             // Handle Tracking
@@ -218,7 +252,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         @Override
-        public void onProviderDisabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+
+        }
 
         @Override
         public void onProviderEnabled(String provider) {}
@@ -245,5 +281,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-    }
+    }*/
 }
