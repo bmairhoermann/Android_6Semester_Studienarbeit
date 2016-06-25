@@ -13,8 +13,6 @@ public class TrackController {
     public boolean trackingModeStart = false;
 
     private LatitudeLongitudeModel currentPosition;
-    //private LatitudeLongitudeModel startPoint;
-    //private LatitudeLongitudeModel endPoint;
     private TrackModel trackModel;
     private boolean isFirstPosition = true;
     private MapController mapController;
@@ -27,10 +25,12 @@ public class TrackController {
 
     public void startTrack(){
 
+        mapController.clearMap();
         trackingModeStart = true;
         isFirstPosition = true;
         trackModel = new TrackModel();
         mapController.drawLine = true;
+        mapController.followUser = true;
     }
 
     public void endTrack(){
@@ -50,8 +50,9 @@ public class TrackController {
                     System.out.println(l.latitude + ", " + l.longitude);
                 }
             }
-            mapsActivity.displaySaveDialog(trackModel);
+            //mapsActivity.displaySaveDialog(trackModel);
             mapController.clearMap();
+            mapController.showTrack(trackModel);
         }else {
             mapController.clearMap();
         }

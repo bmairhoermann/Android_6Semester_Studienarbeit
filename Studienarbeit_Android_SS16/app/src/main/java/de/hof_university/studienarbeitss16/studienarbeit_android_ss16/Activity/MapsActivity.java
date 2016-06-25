@@ -42,11 +42,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager locationManager=null;
     private Boolean isTracking = false;
     private Button trackButton;
-    private TrackCollection trackCollection;
-    private TrackModel trackModel;
-    private TextView speedTextView;
-
-    private Marker userMarker;
 
     // ControllerClasses
     private MapController mapController = null;
@@ -57,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -64,12 +60,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         trackButton = (Button)findViewById(R.id.trackButton);
-        speedTextView = (TextView)findViewById(R.id.speedText);
-
-        trackCollection = new TrackCollection();
-        //locationListener = new MyLocationListener();
-
-
     }
 
 
@@ -90,20 +80,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapController = new MapController(mMap);
         trackController = new TrackController(mapController, this);
         locationController = new LocationController(trackController, mapController);
-
-        /*
-        MarkerOptions userMarkerOptions = new MarkerOptions().position(new LatLng(50.3113026,11.8542196));
-        userMarker = mMap.addMarker(userMarkerOptions);
-
-        userMarker.setVisible(false);
-        userMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user_position));
-
-        // Add a marker in Sydney and move the camera
-        /*
-        LatLng hof = new LatLng(50.3113026,11.8542196);
-        mMap.addMarker(new MarkerOptions().position(hof).title("Marker in Hof"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hof, (float) 15));
-        */
 
         // Enable usertracking if GPS is enabled
         if(displayGpsStatus()){
@@ -194,92 +170,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .show();
         return trackModel;
     }
-
-
-/*
-
-    public class MyLocationListener implements LocationListener {
-
-        int GPS_STATUS = 0;
-
-        LatitudeLongitudeModel lastLatLng;
-        LatitudeLongitudeModel currentLatLng;
-        LatitudeLongitudeModel newLatLong;
-
-        @Override
-        public  void onLocationChanged(Location loc){
-
-            // Move Camera with User
-            if(followUser) {
-                LatLng currentPosition = new LatLng(loc.getLatitude(), loc.getLongitude());
-                if(!userMarker.isVisible()){
-                    userMarker.setVisible(true);
-                }
-                userMarker.setPosition(currentPosition);
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(currentPosition, (float) 17, (float) 0, (float) 0)));
-
-            }
-
-            // Handle Tracking
-            if(isTracking){
-                if(isFirstPosition){
-                    lastLatLng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(lastLatLng.toGoogleLatLng()).title("Startpunkt"));
-                    isFirstPosition = false;
-                    trackModel.firstPosition = new LatitudeLongitudeModel(lastLatLng.latitude, lastLatLng.longitude);
-
-                }else {
-                    newLatLong = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude());
-
-                    mMap.addPolyline(new PolylineOptions()
-                            .add(lastLatLng.toGoogleLatLng(), newLatLong.toGoogleLatLng())
-                            .width(10)
-                            .color(Color.RED));
-                    trackModel.trackList.add(newLatLong);
-                    lastLatLng = newLatLong;
-
-                    if(isLastPosition){
-                        // Set isTracking false here, so no more updates for the Track will be made
-                        isTracking = false;
-                        trackModel.lastPosition = newLatLong;
-                        trackModel.title = "Test";
-                        mMap.addMarker(new MarkerOptions().position(newLatLong.toGoogleLatLng()).title("Endpunkt"));
-                        trackCollection.trackCollectionList.add(trackModel);
-                    }
-                }
-            }
-        }
-
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {}
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            //Status:
-            //public static final int OUT_OF_SERVICE = 0;
-            //public static final int TEMPORARILY_UNAVAILABLE = 1;
-            //public static final int AVAILABLE = 2;
-            GPS_STATUS = status;
-
-            // Catch when User looses GPS-Connection and turns of Tracking
-            if (GPS_STATUS == 1 || GPS_STATUS == 0){
-                if (isLastPosition == true){
-                    isTracking = false;
-                    trackModel.lastPosition = newLatLong;
-                    trackModel.title = "Test";
-                    mMap.addMarker(new MarkerOptions().position(newLatLong.toGoogleLatLng()).title("Endpunkt"));
-                    // Saving Track to Collection
-                    trackCollection.trackCollectionList.add(trackModel);
-                }
-            }
-
-        }
-
-    }*/
 }

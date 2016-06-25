@@ -7,11 +7,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
 /**
@@ -72,12 +74,37 @@ public class MapController {
         }
     }
 
+    public void showTrack(TrackModel trackModel){
+        followUser = false;
+        clearMap();
+
+        // Set Markers
+        map.addMarker(new MarkerOptions().title("Startpunkt").position(trackModel.firstPosition.toGoogleLatLng()));
+        map.addMarker(new MarkerOptions().title("Endpunkt").position(trackModel.lastPosition.toGoogleLatLng()));
+
+        // Set Path
+        //LatitudeLongitudeModel[] tmp = (LatitudeLongitudeModel[])trackModel.trackList.toArray();
+        for (int i=1; i < trackModel.trackList.size();i++){
+            map.addPolyline(new PolylineOptions().color(Color.RED).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
+        }
+
+        // Set Camerabounds
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+        boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng()).include(trackModel.lastPosition.toGoogleLatLng());
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 10));
+    }
+
     public void setMarker(String title, LatitudeLongitudeModel position){
         map.addMarker(new MarkerOptions().position(position.toGoogleLatLng()).title(title));
     }
 
     public void clearMap(){
         map.clear();
+        userMarker = map.addMarker(new MarkerOptions()
+                .visible(false).draggable(false)
+                .position(new LatLng(50.3113025, 11.8542196))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user_position))
+                .anchor(0.5f, 0.5f));
     }
 
 }
