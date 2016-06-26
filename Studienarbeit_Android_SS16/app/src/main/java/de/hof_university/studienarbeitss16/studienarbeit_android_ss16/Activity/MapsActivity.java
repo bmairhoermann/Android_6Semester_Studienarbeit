@@ -15,6 +15,8 @@ import android.util.Log;
 import android.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +44,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager locationManager=null;
     private Boolean isTracking = false;
     private Button trackButton;
+    private ProgressBar spinner;
+    private TextView spinnerText;
 
     // ControllerClasses
     private MapController mapController = null;
@@ -60,6 +64,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         trackButton = (Button)findViewById(R.id.trackButton);
+        spinner = (ProgressBar) findViewById(R.id.spinnerProgress);
+        spinnerText = (TextView)findViewById(R.id.spinnerText);
+
     }
 
 
@@ -85,7 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(displayGpsStatus()){
             try {
                 //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationController);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
             }catch (SecurityException e){
                 Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
             }
@@ -99,10 +106,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             trackController.endTrack();
             isTracking = false;
             trackButton.setText("Route starten");
+            hideSpinnerProgress(true);
         }else {
             trackController.startTrack();
             isTracking = true;
             trackButton.setText("Route beenden");
+            hideSpinnerProgress(false);
         }
 
     }
@@ -169,5 +178,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
         return trackModel;
+    }
+
+    public void hideSpinnerProgress(boolean b){
+        if(b){
+            spinner.setVisibility(View.INVISIBLE);
+            spinnerText.setVisibility(View.INVISIBLE);
+        }else{
+            spinner.setVisibility(View.VISIBLE);
+            spinnerText.setVisibility(View.VISIBLE);
+        }
     }
 }

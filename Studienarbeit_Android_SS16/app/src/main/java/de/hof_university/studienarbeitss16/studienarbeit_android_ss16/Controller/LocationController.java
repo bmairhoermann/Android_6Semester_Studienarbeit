@@ -23,15 +23,15 @@ public class LocationController implements LocationListener {
 
     @Override
     public void onLocationChanged(Location loc){
-        // Update Map
+        // Create LatitudeLongitudeModel
         LatitudeLongitudeModel latlng;
         if (loc.hasSpeed()){
-            latlng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude(), loc.getSpeed());
+            latlng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude(), loc.getSpeed(), loc.getTime());
         }else{
-            latlng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude(), 0.0f);
+            latlng = new LatitudeLongitudeModel(loc.getLatitude(), loc.getLongitude(), 0.0f, loc.getTime());
         }
 
-
+        // Update Map
         mapController.updateUserPosition(latlng);
 
         // Update Track

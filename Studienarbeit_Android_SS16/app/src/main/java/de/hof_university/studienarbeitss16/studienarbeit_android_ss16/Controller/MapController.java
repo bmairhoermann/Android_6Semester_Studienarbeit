@@ -79,8 +79,8 @@ public class MapController {
         clearMap();
 
         // Set Markers
-        map.addMarker(new MarkerOptions().title("Startpunkt").position(trackModel.firstPosition.toGoogleLatLng()));
-        map.addMarker(new MarkerOptions().title("Endpunkt").position(trackModel.lastPosition.toGoogleLatLng()));
+        setMarker("Startpunkt", trackModel.firstPosition);
+        setMarker("Endpunkt", trackModel.lastPosition);
 
         // Set Path
         //LatitudeLongitudeModel[] tmp = (LatitudeLongitudeModel[])trackModel.trackList.toArray();

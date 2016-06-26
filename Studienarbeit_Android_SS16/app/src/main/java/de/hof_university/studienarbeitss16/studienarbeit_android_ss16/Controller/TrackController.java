@@ -1,6 +1,7 @@
 package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller;
 
 import android.os.Debug;
+import android.view.View;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity.MapsActivity;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
@@ -59,6 +60,7 @@ public class TrackController {
     }
 
     public void updateUserPosition(LatitudeLongitudeModel latlng){
+        mapsActivity.hideSpinnerProgress(true);
         currentPosition = latlng;
 
         // Executed when Track starts and is running
