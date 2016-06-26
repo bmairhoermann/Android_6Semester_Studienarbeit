@@ -19,6 +19,11 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.share.model.*;
+import com.facebook.share.model.ShareOpenGraphAction;
+import com.facebook.share.model.ShareOpenGraphContent;
+import com.facebook.share.model.ShareOpenGraphObject;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,6 +38,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.LocationController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.MapController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.TrackController;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.shareController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackCollection;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
@@ -70,7 +76,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -99,6 +104,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else {
             alertbox("GPS Status", "GPS ist: AUS");
         }
+    }
+
+
+        public void shareTrack(View view){
+            shareController test = new shareController(this);
+            test.shareTrack();
+
     }
 
     public void startOrEndTrack(View view){

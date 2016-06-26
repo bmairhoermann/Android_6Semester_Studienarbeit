@@ -17,7 +17,16 @@
         android:layout_marginTop="20dp"
         android:paddingRight="10dp"
         android:onClick="startOrEndTrack"/>
-
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:text="Track Teilen"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"
+        android:onClick="shareTrack"/>
     <ProgressBar
         android:id="@+id/spinnerProgress"
         android:layout_width="wrap_content"

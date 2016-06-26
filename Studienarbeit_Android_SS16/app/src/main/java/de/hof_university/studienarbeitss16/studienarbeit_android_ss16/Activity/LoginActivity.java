@@ -2,8 +2,12 @@ package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
@@ -26,6 +30,8 @@ import com.google.android.gms.common.api.Status;
 
 import com.facebook.FacebookSdk;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +51,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        // Stuff to create Hashkey - Only used once in lifetime
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "de.hof_university.studienarbeit_android_ss16.LoginActivity",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
 
         // Initialize FacebookSDK BEFORE setContentView -> otherwise inflating the loginButton fails
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -143,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -178,6 +204,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     // Handle GOOGLE-SIGNIN-RESULT
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "googleHandleSignInResult:" + result.isSuccess());
+
+
+
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
