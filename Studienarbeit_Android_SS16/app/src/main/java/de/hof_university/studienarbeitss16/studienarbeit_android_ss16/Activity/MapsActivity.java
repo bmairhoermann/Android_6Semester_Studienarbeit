@@ -135,9 +135,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    // Catch User-Short-Tap on TrackListItem -> display Track on Map
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        Log.d("MAPSACTIVITY", "onItemClick: Position: " + position);
+        mapController.showTrack(trackCollection.trackCollectionList.get(position));
     }
 
     public void shareTrack(View view){
