@@ -15,6 +15,7 @@ import java.util.List;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity.MapsActivity;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 
 /**
  * Created by philippwinterholler on 26.06.16.
@@ -34,16 +35,20 @@ public class shareController {
     }
 
     public void check(){
+        TrackModel trackModel = new TrackModel();
 
-        locationA.setLatitude(50.3255215);
-        locationA.setLongitude(11.9905178);
+        trackModel.title = "MyFirstTrack";
+        trackModel.firstPosition = new LatitudeLongitudeModel(50.32578791, 11.94006134, 0.0f, 1466951089000l);
+        trackModel.lastPosition = new LatitudeLongitudeModel(50.32576226, 11.94002498, 0.0f, 1466951098000l);
 
-        locationB.setLatitude(40.3255215);
-        locationB.setLongitude(11.9905178);
+        trackModel.trackList.add(new LatitudeLongitudeModel(50.32578791, 11.94006134, 0.0f, 1466951089000l));
+        trackModel.trackList.add(new LatitudeLongitudeModel(50.32577574, 11.9400563, 1.031746f, 1466951091000l));
+        trackModel.trackList.add(new LatitudeLongitudeModel(50.32576173, 11.94001859, 0.0f, 1466951094000l));
+
     }
 
     public void shareTrack(){
-            check();
+
         /*
         ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
                 .putString("og:type","fitness.course")

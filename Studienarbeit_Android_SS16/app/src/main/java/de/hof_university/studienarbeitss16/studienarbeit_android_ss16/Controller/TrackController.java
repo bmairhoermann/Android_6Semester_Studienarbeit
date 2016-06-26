@@ -54,6 +54,14 @@ public class TrackController {
             //mapsActivity.displaySaveDialog(trackModel);
             mapController.clearMap();
             mapController.showTrack(trackModel);
+            mapsActivity.addTrackModel(trackModel);
+
+            //sysout for Track
+            System.out.println("Firstposition: " + trackModel.firstPosition.latitude+", "+trackModel.firstPosition.longitude+", speed: "+trackModel.firstPosition.speed+", time"+trackModel.firstPosition.timeStamp);
+            System.out.println("Lastposition: " + trackModel.lastPosition.latitude+", "+trackModel.lastPosition.longitude+", speed: "+trackModel.lastPosition.speed+", time"+trackModel.lastPosition.timeStamp);
+            for (LatitudeLongitudeModel l : trackModel.trackList){
+                System.out.println("Listitem: " + l.latitude+", "+l.longitude+", speed: "+l.speed+", time"+l.timeStamp);
+            }
         }else {
             mapController.clearMap();
         }

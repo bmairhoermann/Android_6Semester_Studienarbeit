@@ -11,9 +11,12 @@ import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.widget.ListPopupWindow;
 import android.util.Log;
 import android.app.AlertDialog;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -35,6 +38,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
+
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.Adapter.TrackListAdapter;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.LocationController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.MapController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.TrackController;
@@ -44,19 +50,25 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.Trac
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener{
 
-    private GoogleMap mMap;
-    private LocationManager locationManager=null;
-    private Boolean isTracking = false;
+    // ViewElements
     private Button trackButton;
     private ProgressBar spinner;
     private TextView spinnerText;
+    private Button trackListButton;
+    private ListPopupWindow listPopupWindow;
 
     // ControllerClasses
     private MapController mapController = null;
     private TrackController trackController = null;
     private LocationController locationController = null;
+
+    // Other
+    private GoogleMap mMap;
+    private LocationManager locationManager=null;
+    private Boolean isTracking = false;
+    public TrackCollection trackCollection = new TrackCollection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +81,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // Initialize ViewElements
         trackButton = (Button)findViewById(R.id.trackButton);
         spinner = (ProgressBar) findViewById(R.id.spinnerProgress);
         spinnerText = (TextView)findViewById(R.id.spinnerText);
+        trackListButton = (Button) findViewById(R.id.trackListButton);
 
+        // Initialize listPopupWindow
+        listPopupWindow = new ListPopupWindow(MapsActivity.this);
+        listPopupWindow.setAdapter(new TrackListAdapter(MapsActivity.this, R.layout.list_item, (ArrayList<TrackModel>) trackCollection.trackCollectionList));
+        listPopupWindow.setAnchorView(trackListButton);
+        listPopupWindow.setWidth(500);
+        listPopupWindow.setHeight(600);
+        listPopupWindow.setModal(true);
+        listPopupWindow.setOnItemClickListener(MapsActivity.this);
+        trackListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listPopupWindow.show();
+            }
+        });
     }
 
 
@@ -106,8 +135,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        Log.d("MAPSACTIVITY", "onItemClick: Position: " + position);
+    }
 
-        public void shareTrack(View view){
+    public void shareTrack(View view){
             shareController test = new shareController(this);
             test.shareTrack();
 
@@ -190,6 +223,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
         return trackModel;
+    }
+
+    public void addTrackModel(TrackModel trackModel){
+        trackModel.title = Integer.toString(trackCollection.trackCollectionList.size());
+        trackCollection.trackCollectionList.add(trackModel);
     }
 
     public void hideSpinnerProgress(boolean b){
