@@ -82,15 +82,17 @@ public class MapController {
         setMarker("Startpunkt", trackModel.firstPosition);
         setMarker("Endpunkt", trackModel.lastPosition);
 
-        // Set Path
-        //LatitudeLongitudeModel[] tmp = (LatitudeLongitudeModel[])trackModel.trackList.toArray();
+        // Set Path and set up bounds
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+        boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng());
+        boundsBuilder.include(trackModel.lastPosition.toGoogleLatLng());
         for (int i=1; i < trackModel.trackList.size();i++){
             map.addPolyline(new PolylineOptions().color(Color.RED).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
+            boundsBuilder.include(trackModel.trackList.get(i).toGoogleLatLng());
         }
 
         // Set Camerabounds
-        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
-        boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng()).include(trackModel.lastPosition.toGoogleLatLng());
+        // boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng()).include(trackModel.lastPosition.toGoogleLatLng());
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 10));
     }
 
