@@ -58,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private TextView spinnerText;
     private Button trackListButton;
     private ListPopupWindow listPopupWindow;
+    private Button loginButton;
 
     // ControllerClasses
     private MapController mapController = null;
@@ -87,6 +88,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinner = (ProgressBar) findViewById(R.id.spinnerProgress);
         spinnerText = (TextView)findViewById(R.id.spinnerText);
         trackListButton = (Button) findViewById(R.id.trackListButton);
+        loginButton = (Button)findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Initialize listPopupWindow
         listPopupWindow = new ListPopupWindow(MapsActivity.this);
@@ -131,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
             }
         }else {
-            alertbox("GPS Status", "GPS ist: AUS");
+            gpsAlertbox("GPS Status", "GPS ist: AUS");
         }
     }
 
@@ -154,16 +164,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             trackButton.setText("Route starten");
             hideSpinnerProgress(true);
         }else {
-            trackController.startTrack();
-            isTracking = true;
-            trackButton.setText("Route beenden");
-            hideSpinnerProgress(false);
+            if (displayGpsStatus()) {
+                trackController.startTrack();
+                isTracking = true;
+                trackButton.setText("Route beenden");
+                hideSpinnerProgress(false);
+            }else{
+                gpsAlertbox("GPS Status", "GPS ist: AUS");
+            }
         }
 
     }
 
-    /*----------Method to create an AlertBox ------------- */
-    protected void alertbox(String title, String mymessage) {
+    // Creates an Alertbox if GPS_Provider is disabled
+    protected void gpsAlertbox(String title, String mymessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mymessage)
                 .setCancelable(false)
