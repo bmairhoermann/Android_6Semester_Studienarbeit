@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.share.model.*;
 import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
@@ -58,7 +59,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private TextView spinnerText;
     private Button trackListButton;
     private ListPopupWindow listPopupWindow;
-    private Button loginButton;
 
     // ControllerClasses
     private MapController mapController = null;
@@ -75,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -88,15 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinner = (ProgressBar) findViewById(R.id.spinnerProgress);
         spinnerText = (TextView)findViewById(R.id.spinnerText);
         trackListButton = (Button) findViewById(R.id.trackListButton);
-        loginButton = (Button)findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapsActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         // Initialize listPopupWindow
         listPopupWindow = new ListPopupWindow(MapsActivity.this);
@@ -141,14 +133,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
             }
         }else {
-            gpsAlertbox("GPS Status", "GPS ist: AUS");
+            alertbox("GPS Status", "GPS ist: AUS");
         }
     }
 
-    // Catch User-Short-Tap on TrackListItem -> display Track on Map
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        mapController.showTrack(trackCollection.trackCollectionList.get(position));
+        Log.d("MAPSACTIVITY", "onItemClick: Position: " + position);
     }
 
     public void shareTrack(View view){
@@ -164,20 +155,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             trackButton.setText("Route starten");
             hideSpinnerProgress(true);
         }else {
-            if (displayGpsStatus()) {
-                trackController.startTrack();
-                isTracking = true;
-                trackButton.setText("Route beenden");
-                hideSpinnerProgress(false);
-            }else{
-                gpsAlertbox("GPS Status", "GPS ist: AUS");
-            }
+            trackController.startTrack();
+            isTracking = true;
+            trackButton.setText("Route beenden");
+            hideSpinnerProgress(false);
         }
 
     }
 
-    // Creates an Alertbox if GPS_Provider is disabled
-    protected void gpsAlertbox(String title, String mymessage) {
+    /*----------Method to create an AlertBox ------------- */
+    protected void alertbox(String title, String mymessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mymessage)
                 .setCancelable(false)

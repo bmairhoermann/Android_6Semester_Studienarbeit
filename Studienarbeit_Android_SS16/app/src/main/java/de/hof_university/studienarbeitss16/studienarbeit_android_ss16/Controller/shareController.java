@@ -2,6 +2,7 @@ package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controlle
 
 import android.location.Location;
 import android.os.Debug;
+import android.util.Log;
 
 import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
@@ -39,7 +40,7 @@ public class shareController {
 
         trackModel.title = "MyFirstTrack";
         trackModel.firstPosition = new LatitudeLongitudeModel(50.32578791, 11.94006134, 0.0f, 1466951089000l);
-        trackModel.lastPosition = new LatitudeLongitudeModel(50.32576226, 11.94002498, 0.0f, 1466951098000l);
+        trackModel.lastPosition = new LatitudeLongitudeModel(50.32576226, 11.94002498, 0.0f, 1466951089000l + 6060000l);
         /*
         Firstposition: 50.32578791, 11.94006134, speed: 0.0, time 1466951089000
         Lastposition: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
@@ -93,12 +94,12 @@ public class shareController {
                 test.putString("og:type","fitness.course");
                 test.putString("og:title","Motorrad Tour");
             test.putString("og:description","Ist mit der GPS-Tracker App eine Motorrad Tour gefahren");
-                //Dauer
-        test.putLong("fitness:duration:value",myTrackModel.lastPosition.timeStamp - myTrackModel.firstPosition.timeStamp);
+                //Dauer in Sekunden
+        test.putInt("fitness:duration:value",calcTime(myTrackModel.firstPosition.timeStamp,myTrackModel.lastPosition.timeStamp));
         test.putString("fitness:duration:units", "s");
 
                 //Entfernung
-        test.putInt("fitness:distance:value",122);
+        test.putInt("fitness:distance:value",12);
         test.putString("fitness:distance:units","km");
 
                 //Geschwindigkeit
@@ -124,5 +125,27 @@ public class shareController {
 
         ShareDialog.show(mapsActivity, content);
 
+    }
+    public Integer calcTime(long startime, long endTime){
+
+        long different = (endTime-startime);
+
+        long secondsInMilli = 1000;
+       /*
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        Log.d("DATUM:","Stunden:" +elapsedHours+ " Minuten: "+elapsedMinutes+" Sekunden: " +elapsedSeconds );
+        */
+
+        return (int) different/1000;
     }
 }
