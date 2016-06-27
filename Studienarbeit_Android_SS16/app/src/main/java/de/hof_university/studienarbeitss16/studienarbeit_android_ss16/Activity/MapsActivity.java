@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.share.model.*;
 import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
@@ -79,6 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -145,10 +147,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    // Catch User-Short-Tap on TrackListItem -> display Track on Map
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        mapController.showTrack(trackCollection.trackCollectionList.get(position));
+        Log.d("MAPSACTIVITY", "onItemClick: Position: " + position);
     }
 
     public void shareTrack(View view){
@@ -169,6 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //trackButton.setText("Route starten");
             hideSpinnerProgress(true);
         }else {
+
             if (displayGpsStatus()) {
                 try {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
@@ -182,11 +184,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }else{
                 gpsAlertbox("GPS Status", "GPS ist: AUS");
             }
+
+            trackController.startTrack();
+            isTracking = true;
+            //trackButton.setText("Route beenden");
+            hideSpinnerProgress(false);
+
         }
 
     }
 
-    // Creates an Alertbox if GPS_Provider is disabled
+    /*----------Method to create an AlertBox ------------- */
     protected void gpsAlertbox(String title, String mymessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mymessage)
