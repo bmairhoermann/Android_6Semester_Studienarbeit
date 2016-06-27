@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.util.Log;
 import android.app.AlertDialog;
@@ -41,6 +43,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.Adapter.TrackListAdapter;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.Dialog.DialogSaveTrack;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.LocationController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.MapController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.TrackController;
@@ -50,10 +53,10 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.Trac
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, DialogSaveTrack.DialogSaveTrackListener {
 
     // ViewElements
-    private Button trackButton;
+    private FloatingActionButton trackButton;
     private ProgressBar spinner;
     private TextView spinnerText;
     private Button trackListButton;
@@ -69,6 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private LocationManager locationManager=null;
     private Boolean isTracking = false;
+    private TrackModel newTrackModel;
     public TrackCollection trackCollection = new TrackCollection();
 
     @Override
@@ -84,7 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // Initialize ViewElements
-        trackButton = (Button)findViewById(R.id.trackButton);
+        trackButton = (FloatingActionButton)findViewById(R.id.trackButton);
         spinner = (ProgressBar) findViewById(R.id.spinnerProgress);
         spinnerText = (TextView)findViewById(R.id.spinnerText);
         trackListButton = (Button) findViewById(R.id.trackListButton);
@@ -96,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
             }
         });
+        hideSpinnerProgress(true);
 
 
         // Initialize listPopupWindow
@@ -134,12 +139,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Enable usertracking if GPS is enabled
         if(displayGpsStatus()){
-            try {
-                //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
-            }catch (SecurityException e){
-                Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
-            }
+
         }else {
             gpsAlertbox("GPS Status", "GPS ist: AUS");
         }
@@ -159,15 +159,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void startOrEndTrack(View view){
         if(isTracking){
+            try {
+                locationManager.removeUpdates(locationController);
+            }catch (SecurityException e){
+                Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
+            }
             trackController.endTrack();
             isTracking = false;
-            trackButton.setText("Route starten");
+            //trackButton.setText("Route starten");
             hideSpinnerProgress(true);
         }else {
             if (displayGpsStatus()) {
+                try {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
+                }catch (SecurityException e){
+                    Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
+                }
                 trackController.startTrack();
                 isTracking = true;
-                trackButton.setText("Route beenden");
+                //trackButton.setText("Route beenden");
                 hideSpinnerProgress(false);
             }else{
                 gpsAlertbox("GPS Status", "GPS ist: AUS");
@@ -222,7 +232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public TrackModel displaySaveDialog(final TrackModel trackModel){
         new AlertDialog.Builder(this)
                 .setTitle("Save Track")
-                .setMessage("Startpoint: " + trackModel.firstPosition + ", Entpoint: " + trackModel.lastPosition + ", Tracksize: " + trackModel.trackList.size())
+                .setMessage("Startpoint: " + trackModel.firstPosition + ", Endpoint: " + trackModel.lastPosition + ", Tracksize: " + trackModel.trackList.size())
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
@@ -240,9 +250,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return trackModel;
     }
 
+    // Called when TrackController finished a Track
     public void addTrackModel(TrackModel trackModel){
-        trackModel.title = Integer.toString(trackCollection.trackCollectionList.size());
-        trackCollection.trackCollectionList.add(trackModel);
+        // Call dialog for naming the Track
+        FragmentManager fm = getSupportFragmentManager();
+        DialogSaveTrack dialogSaveTrack = new DialogSaveTrack();
+        dialogSaveTrack.show(fm, "fragment_save_track");
+        newTrackModel = trackModel;
+    }
+    // Called by DialogSaveTrack when User is done
+    @Override
+    public void onFinishSaveDialog(boolean save, String title){
+        if (save){
+            newTrackModel.title = title;
+            trackCollection.trackCollectionList.add(newTrackModel);
+        }
+
     }
 
     public void hideSpinnerProgress(boolean b){

@@ -51,7 +51,6 @@ public class TrackController {
                     System.out.println(l.latitude + ", " + l.longitude);
                 }
             }
-            //mapsActivity.displaySaveDialog(trackModel);
             mapController.clearMap();
             mapController.showTrack(trackModel);
             mapsActivity.addTrackModel(trackModel);

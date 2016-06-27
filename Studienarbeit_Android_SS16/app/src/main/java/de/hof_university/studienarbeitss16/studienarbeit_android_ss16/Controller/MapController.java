@@ -92,8 +92,7 @@ public class MapController {
         }
 
         // Set Camerabounds
-        // boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng()).include(trackModel.lastPosition.toGoogleLatLng());
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 10));
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
     }
 
     public void setMarker(String title, LatitudeLongitudeModel position){
