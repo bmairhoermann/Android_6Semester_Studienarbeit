@@ -109,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         listPopupWindow = new ListPopupWindow(MapsActivity.this);
         listPopupWindow.setAdapter(new TrackListAdapter(MapsActivity.this, R.layout.list_item, (ArrayList<TrackModel>) trackCollection.trackCollectionList));
         listPopupWindow.setAnchorView(trackListButton);
-        listPopupWindow.setWidth(500);
+        listPopupWindow.setWidth(900);
         listPopupWindow.setHeight(600);
         listPopupWindow.setModal(true);
         listPopupWindow.setOnItemClickListener(MapsActivity.this);
@@ -121,16 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+     // This callback is triggered when the map is ready to be used.
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -140,22 +131,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationController = new LocationController(trackController, mapController);
 
         // Enable usertracking if GPS is enabled
-        if(displayGpsStatus()){
-
-        }else {
+        if(displayGpsStatus()){}else {
             gpsAlertbox("GPS Status", "GPS ist: AUS");
         }
     }
 
+    // Called when User selects TrackListItem
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-        Log.d("MAPSACTIVITY", "onItemClick: Position: " + position);
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("")
+                .setCancelable(true)
+                .setTitle(trackCollection.trackCollectionList.get(position).title)
+                .setPositiveButton("Anzeigen",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mapController.showTrack(trackCollection.trackCollectionList.get(position));
+                                dialog.cancel();
+                                listPopupWindow.dismiss();
+                            }
+                        })
+                .setNegativeButton("Auf Facebook teilen",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Put Call share here like: shareController.share(trackCollection.trackCollectionList.get(position);
+
+                                dialog.cancel();
+                                listPopupWindow.dismiss();
+                            }
+                        });
+        AlertDialog alter = builder.create();
+        alter.show();
+
+
+        mapController.showTrack(trackCollection.trackCollectionList.get(position));
     }
 
     public void shareTrack(View view){
             shareController test = new shareController(this);
             test.shareTrack();
-
     }
 
     public void startOrEndTrack(View view){
@@ -170,7 +186,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //trackButton.setText("Route starten");
             hideSpinnerProgress(true);
         }else {
-
             if (displayGpsStatus()) {
                 try {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
@@ -184,7 +199,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }else{
                 gpsAlertbox("GPS Status", "GPS ist: AUS");
             }
-
             trackController.startTrack();
             isTracking = true;
             //trackButton.setText("Route beenden");
@@ -194,8 +208,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    /*----------Method to create an AlertBox ------------- */
-    protected void gpsAlertbox(String title, String mymessage) {
+    // Creates an Alterbox to inform User that GPS is diable
+    private void gpsAlertbox(String title, String mymessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mymessage)
                 .setCancelable(false)
@@ -222,7 +236,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alert.show();
     }
 
-    /*----Method to Check GPS is enable or disable ----- */
+    // Method to Check GPS is enable or disable
     private Boolean displayGpsStatus() {
         ContentResolver contentResolver = getBaseContext()
                 .getContentResolver();
@@ -237,27 +251,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public TrackModel displaySaveDialog(final TrackModel trackModel){
-        new AlertDialog.Builder(this)
-                .setTitle("Save Track")
-                .setMessage("Startpoint: " + trackModel.firstPosition + ", Endpoint: " + trackModel.lastPosition + ", Tracksize: " + trackModel.trackList.size())
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                        mapController.clearMap();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                        mapController.clearMap();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-        return trackModel;
-    }
-
     // Called when TrackController finished a Track
     public void addTrackModel(TrackModel trackModel){
         // Call dialog for naming the Track
@@ -266,6 +259,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dialogSaveTrack.show(fm, "fragment_save_track");
         newTrackModel = trackModel;
     }
+
     // Called by DialogSaveTrack when User is done
     @Override
     public void onFinishSaveDialog(boolean save, String title){
@@ -273,7 +267,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             newTrackModel.title = title;
             trackCollection.trackCollectionList.add(newTrackModel);
         }
-
     }
 
     public void hideSpinnerProgress(boolean b){
