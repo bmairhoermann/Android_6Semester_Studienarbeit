@@ -2,6 +2,7 @@ package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controlle
 
 import android.location.Location;
 import android.os.Debug;
+import android.util.Log;
 
 import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
@@ -38,8 +39,8 @@ public class shareController {
         TrackModel trackModel = new TrackModel();
 
         trackModel.title = "MyFirstTrack";
-        trackModel.firstPosition = new LatitudeLongitudeModel(50.32578791, 11.94006134, 0.0f, 1466951089000l);
-        trackModel.lastPosition = new LatitudeLongitudeModel(50.32576226, 11.94002498, 0.0f, 1466951098000l);
+        trackModel.firstPosition = new LatitudeLongitudeModel(50.32578791, 11.9195146, 0.0f, 1466951089000l);
+        trackModel.lastPosition = new LatitudeLongitudeModel(50.32578791, 11.9195146, 0.0f, 1466951098000l+4104000l);
         /*
         Firstposition: 50.32578791, 11.94006134, speed: 0.0, time 1466951089000
         Lastposition: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
@@ -52,14 +53,45 @@ public class shareController {
         Listitem: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
         Listitem: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
             */
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.32578791, 11.94006134, 0.0f, 1466951089000l));
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.32577574, 11.9400563, 1.031746f, 1466951091000l));
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.32576173, 11.94001859, 0.0f, 1466951094000l));
+        trackModel.trackList.add(new LatitudeLongitudeModel(50.3179066, 11.9195146, 0.0f, 1466951089000l));
+        trackModel.trackList.add(new LatitudeLongitudeModel(50.3179066, 11.9115146, 0.0f, 1466951091000l));
         trackModel.trackList.add(new LatitudeLongitudeModel(50.3257799, 11.94005303, 1.02f, 1466951095000l));
+        trackModel.trackList.add(new LatitudeLongitudeModel(50.3257799, 12.94005303, 1.02f, 1466951095000l));
         return trackModel;
 
     }
+    public long calculateDistance(){
+        TrackModel personalTrackModel = check();
+        float distance = 0;
 
+        for (int i = 0 ; i < personalTrackModel.trackList.size()-1;i++){
+            Location tempLocation = new Location("PointA");
+
+            tempLocation.setLongitude(personalTrackModel.trackList.get(i).longitude);
+            tempLocation.setLatitude(personalTrackModel.trackList.get(i).latitude);
+
+            Location temp2Location = new Location("PointB");
+
+            temp2Location.setLongitude(personalTrackModel.trackList.get(i+1).longitude);
+            temp2Location.setLatitude(personalTrackModel.trackList.get(i+1).latitude);
+
+            distance += tempLocation.distanceTo(temp2Location);
+
+            Log.d("FLOAT:WERTE", "Entfernung: " + distance +" METER!" + "Entfernung:" +((distance/1000))+ " KILOMETER");
+
+        }
+        /*
+        Location locationA = new Location("A");
+        locationA.setLongitude(personalTrackModel.firstPosition.longitude);
+        locationA.setLatitude(personalTrackModel.firstPosition.latitude);
+
+        Location locationB = new Location("B");
+        locationB.setLongitude(personalTrackModel.lastPosition.longitude);
+        locationB.setLatitude(personalTrackModel.lastPosition.latitude);
+         */
+
+        return (long)(distance/1000);
+    }
     public void shareTrack(){
         TrackModel myTrackModel = check();
 
@@ -98,7 +130,8 @@ public class shareController {
         test.putString("fitness:duration:units", "s");
 
                 //Entfernung
-        test.putInt("fitness:distance:value",122);
+        test.putLong("fitness:distance:value",calculateDistance());
+       
         test.putString("fitness:distance:units","km");
 
                 //Geschwindigkeit
