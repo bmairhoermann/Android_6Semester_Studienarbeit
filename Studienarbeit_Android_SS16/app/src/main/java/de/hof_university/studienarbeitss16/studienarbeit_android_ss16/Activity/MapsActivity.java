@@ -41,6 +41,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.Adapter.TrackListAdapter;
@@ -60,9 +67,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FloatingActionButton trackButton;
     private ProgressBar spinner;
     private TextView spinnerText;
-    private Button trackListButton;
+    private FloatingActionButton trackListButton;
     private ListPopupWindow listPopupWindow;
-    private Button loginButton;
+    private FloatingActionButton loginButton;
 
     // ControllerClasses
     private MapController mapController = null;
@@ -74,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager locationManager=null;
     private Boolean isTracking = false;
     private TrackModel newTrackModel;
+    private String FILENAME = "PersitencyTrack";
     public TrackCollection trackCollection = new TrackCollection();
 
     @Override
@@ -93,8 +101,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         trackButton = (FloatingActionButton)findViewById(R.id.trackButton);
         spinner = (ProgressBar) findViewById(R.id.spinnerProgress);
         spinnerText = (TextView)findViewById(R.id.spinnerText);
-        trackListButton = (Button) findViewById(R.id.trackListButton);
-        loginButton = (Button)findViewById(R.id.loginButton);
+        trackListButton = (FloatingActionButton) findViewById(R.id.trackListButton);
+        loginButton = (FloatingActionButton) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Initialize listPopupWindow
         listPopupWindow = new ListPopupWindow(MapsActivity.this);
-        listPopupWindow.setAdapter(new TrackListAdapter(MapsActivity.this, R.layout.list_item, (ArrayList<TrackModel>) trackCollection.trackCollectionList));
+        //listPopupWindow.setAdapter(new TrackListAdapter(MapsActivity.this, R.layout.list_item, (ArrayList<TrackModel>) trackCollection.trackCollectionList));
         listPopupWindow.setAnchorView(trackListButton);
         listPopupWindow.setWidth(900);
         listPopupWindow.setHeight(600);
@@ -116,9 +124,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         trackListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listPopupWindow.setAdapter(new TrackListAdapter(MapsActivity.this, R.layout.list_item, (ArrayList<TrackModel>) trackCollection.trackCollectionList));
                 listPopupWindow.show();
             }
         });
+
+        // Get Persitency
+        trackCollection = readTrackModelCollectionFromMemory();
     }
 
      // This callback is triggered when the map is ready to be used.
@@ -170,13 +182,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapController.showTrack(trackCollection.trackCollectionList.get(position));
     }
 
-    public void shareTrack(View view){
-            //shareController test = new shareController();
-            //test.shareTrack();
-    }
 
     public void startOrEndTrack(View view){
         if(isTracking){
+            trackButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
             try {
                 locationManager.removeUpdates(locationController);
             }catch (SecurityException e){
@@ -188,6 +197,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             hideSpinnerProgress(true);
         }else {
             if (displayGpsStatus()) {
+                trackButton.setImageResource(R.drawable.ic_stop_black_24dp);
                 try {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
                 }catch (SecurityException e){
@@ -267,6 +277,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (save){
             newTrackModel.title = title;
             trackCollection.trackCollectionList.add(newTrackModel);
+            writeTrackModelCollectionToMemory(trackCollection);
         }
     }
 
@@ -278,5 +289,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             spinner.setVisibility(View.VISIBLE);
             spinnerText.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void writeTrackModelCollectionToMemory(TrackCollection tmp){
+        FileOutputStream fileOutputStream;
+        try {
+            fileOutputStream = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(tmp);
+            objectOutputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private TrackCollection readTrackModelCollectionFromMemory(){
+        FileInputStream fileInputStream;
+        TrackCollection tmp = new TrackCollection();
+        try {
+            fileInputStream = openFileInput(FILENAME);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            tmp = (TrackCollection) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        return tmp;
     }
 }

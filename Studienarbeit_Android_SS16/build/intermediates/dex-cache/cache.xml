@@ -1,2 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0c3e81d3eb86b86d194b5cdb6a4de78203f6f7fd">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appindexing-8.3.0_88755217e75994eb23cbd764635398bb8d9bca21/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0a1897426566e408a5c20a3d931f77d89771d07f">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-8.3.0_60c79a7405c8b5b3ae4461ff55e19d68ee605610/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea34579b1be157cd792376362157e9c54ebb4cd7">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-safetynet-8.3.0_771da36f855c0b4b3e65239c9442a64d99fd7b01/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="cb4af597d079ffdc0984a3ec2c03cbf6a1b9f869">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-8.3.0_b0fcf408575a9e0a291260a4425e2f498aab821a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2c6fcd6267cbac6509a2e72a61127534a1d616cf">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-8.3.0_da65d27c9a1ed40fa1fc38116ffa4c03f80f53fe/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.4.0_138d4b09f602405f376a201803bcb4bd583010cf/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b000ecceb9877fefcdc7ab1959ff03df91551656">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-measurement-8.3.0_38ee601daf314561770e61abea98f950c717878b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="58adcfbe2c8393765e84c5489d01bba6a5159eb2">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-8.3.0_17e48ed639e6feaad93633c6603d1a5ef689aafb/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="9aedc597d74c6d77258ce5236e9abff0c3cc65e3">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wearable-8.3.0_93f424888f69e6e718ecddd643838da6ecace4bb/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-22.2.0_a158ff6e65d4ad6029b3da3db68858d9f963e6e2/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.4.0_a79822d7a9a233391fe8eafeafe999bf29d7dc16/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.4.0_4b0363958c9383df2fd4944ac930b95591adbe81/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_0946984f0dbc61fd575caa204c4658579f6f5cdf/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="6d9ed9a288364688e7fcf6704776284dac1eb42e">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-8.3.0_3976c3971b5d5c84b67bb40685dc54cc72b1ab58/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="fd76d95678a6b2b8a49bb8a9fb5bcef7aedb70e7">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-8.3.0_2f44140a9b765239447dbb953fffa9ac2915ad8a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="71eda10e33212e44245524b5087366ff8d805825">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-8.3.0_b82dcbfd7ba6847c6b558fbc3866831b0eddc68a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_40042b3cf5f356288aa9972e5b0df94c2f02bfd1/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-22.2.0_ef846d4ebd6cddc14da207e60d425a15f711a654/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="345a1b5cf5b144ce18ba6962bc66a7e2f26c1c1b">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.3.0_d3bdc15b0958ef4a89772f19618f7e92fbd1dd30/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-android-1.1.4_0591b8de514bf71932c57828dd95e692251a2490/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="9c9bdb4b2497465a6cf7d5e8f57c5298f828a380">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wallet-8.3.0_2f4c8ee8353ca8d815798277085ffc2a4a237913/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="724ce977487ab3a215d4d2eb47d8dccd9f30013f">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-8.3.0_471cc8e50d48e57dfeb9f2808a7450edfef7ea48/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b125bfcf7d35dc291c80cbf2d902cfe8f3c50253">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_44e475089677f8c80be34885353e466b4d1bd546/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.android-facebook-android-sdk-4.0.0_fcbf26595d5b9bb4727e63ee40dbb16ec6fb895b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4b8df1b1e51fe14b0e89b3845dc2e215a024a09f">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-8.3.0_a0b00fe1290ab7359dc8f8fd868efc7694ef30ae/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="27775d59b16610ac76f1b83693fedd9520396332">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-8.3.0_926836168c33a51d992ca34bd455e55c7b485e51/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.4.0_629cac4eea2499dfcf1c4c9157994f56632f6099/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_a19c62cd7eacbf885725abd10dcb973baa003a0f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="eb576427887e497cd958a475475f9206e38dc314">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-nearby-8.3.0_50ed542c141d682bd4bc17a6dadead1c701691bc/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0af4f577b4a21eb9be2a7f52e33b077b67e6d9f8">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-plus-8.3.0_10977b095c1caff46f7b9894723f4e7d8ed09d3d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1f557b969933cadb496f2f13da5bd9bc9c47f59f">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_223ea6e57a0bb80173679e056f50c8e194002d78/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="77f9593d979f4347344be233bd0d888315f79517">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-8.3.0_6c570636ebdb3620da6c3243e49f4c1a4b20e9cd/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="744c49c02a27569cc4cc049685d3649e4ef439f2">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-panorama-8.3.0_477b651667890cffcf46a7c54127e950e88ce83c/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="01a90bbb9495a8bbf6f3cfdf12f1b35caaa9524b">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.3.0_b17004781c91164d523dd8ac2e1bba6f7a832101/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="af6ee25641df3142059c0828517aa7ee6eba08d6">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-8.3.0_3c05b7e5756b48d06fa32e72463ce6d53eed32ca/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.4.0_6a5d6111b3038d2fbff406e1e9b5c20b8030412f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="697679619b00837e3d09e9988a2e1e2a9009d502">
+        <dex dex="/Users/brianmairhoermann/Documents/University/iOS/Projects/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-8.3.0_7a3c8eb09c098c5a27e6a6f3a49a6c0c4307b218/classes.dex" />
+    </item>
+
+</items>

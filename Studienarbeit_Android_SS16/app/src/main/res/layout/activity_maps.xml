@@ -12,39 +12,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_play_arrow_black_24dp"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:paddingRight="10dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
+        android:tint="@android:color/white"
         android:onClick="startOrEndTrack"/>
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:text="Login"
+        android:layout_gravity="top|right"
+        android:src="@drawable/ic_person_black_24dp"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:paddingRight="10dp"/>
-    <Button
-        android:id="@+id/shareButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
-        android:text="Track Teilen"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:paddingRight="10dp"
-        android:onClick="shareTrack"/>
-    <Button
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:tint="@android:color/white"/>
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/trackListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:text="Trackliste"
+        android:layout_gravity="bottom|left"
+        android:src="@drawable/ic_format_align_left_black_24dp"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:paddingRight="10dp"/>
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:tint="@android:color/white"/>
     <ProgressBar
         android:id="@+id/spinnerProgress"
         android:layout_width="wrap_content"
