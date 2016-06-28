@@ -25,14 +25,16 @@ public class shareController {
 
     private int test;
     private MapsActivity mapsActivity;
+    private TrackModel trackModel;
 
     Location locationA = new Location("a");
 
     Location locationB = new Location("b");
 
 
-    public shareController(MapsActivity mapsActivity){
-        this.mapsActivity = mapsActivity;
+    public shareController(MapsActivity mapsActivitym, TrackModel trackModel){
+        this.mapsActivity = mapsActivitym;
+        this.trackModel = trackModel;
     }
 
     public TrackModel check(){
@@ -60,20 +62,21 @@ public class shareController {
         return trackModel;
 
     }
-    public long calculateDistance(){
-        TrackModel personalTrackModel = check();
-        float distance = 0;
+    public double calculateDistance(){
+        //TrackModel personalTrackModel = trackModel;
 
-        for (int i = 0 ; i < personalTrackModel.trackList.size()-1;i++){
+        double distance = 0;
+
+        for (int i = 0 ; i < trackModel.trackList.size()-1;i++){
             Location tempLocation = new Location("PointA");
 
-            tempLocation.setLongitude(personalTrackModel.trackList.get(i).longitude);
-            tempLocation.setLatitude(personalTrackModel.trackList.get(i).latitude);
+            tempLocation.setLongitude(trackModel.trackList.get(i).longitude);
+            tempLocation.setLatitude(trackModel.trackList.get(i).latitude);
 
             Location temp2Location = new Location("PointB");
 
-            temp2Location.setLongitude(personalTrackModel.trackList.get(i+1).longitude);
-            temp2Location.setLatitude(personalTrackModel.trackList.get(i+1).latitude);
+            temp2Location.setLongitude(trackModel.trackList.get(i+1).longitude);
+            temp2Location.setLatitude(trackModel.trackList.get(i+1).latitude);
 
             distance += tempLocation.distanceTo(temp2Location);
 
@@ -90,10 +93,26 @@ public class shareController {
         locationB.setLatitude(personalTrackModel.lastPosition.latitude);
          */
 
-        return (long)(distance/1000);
+        return (distance/1000);
     }
+
+    public long calculateDuration(){
+        float duration=0;
+
+        duration =  (trackModel.trackList.get(trackModel.trackList.size()-1).timeStamp)-(trackModel.trackList.get(0).timeStamp);
+
+        Log.d("Float: Werte", "calculateDuration: " + duration/1000);
+
+        return (long)(duration/1000);
+    }
+
+    public double calculateSpeed(){
+        double speed = 0.0;
+        speed = ((calculateDistance()*1000)/calculateDuration());
+        return speed;
+    }
+
     public void shareTrack(){
-        TrackModel myTrackModel = check();
 
 
         /*
@@ -126,21 +145,21 @@ public class shareController {
                 test.putString("og:title","Motorrad Tour");
             test.putString("og:description","Ist mit der GPS-Tracker App eine Motorrad Tour gefahren");
                 //Dauer
-        test.putLong("fitness:duration:value",myTrackModel.lastPosition.timeStamp - myTrackModel.firstPosition.timeStamp);
+        test.putLong("fitness:duration:value",calculateDuration());
         test.putString("fitness:duration:units", "s");
 
                 //Entfernung
-        test.putLong("fitness:distance:value",calculateDistance());
+        test.putDouble("fitness:distance:value",calculateDistance());
        
         test.putString("fitness:distance:units","km");
 
                 //Geschwindigkeit
 
-        test.putDouble("fitness:speed:value",10.21);
+        test.putDouble("fitness:speed:value",calculateSpeed());
         test.putString("fitness:speed:units","m/s");
-        for(int i = 0; i < myTrackModel.trackList.size();  i++){
-            test.putDouble("fitness:metrics["+i+"]:location:latitude",myTrackModel.trackList.get(i).latitude);
-            test.putDouble("fitness:metrics["+i+"]:location:longitude",myTrackModel.trackList.get(i).longitude);
+        for(int i = 0; i < trackModel.trackList.size();  i++){
+            test.putDouble("fitness:metrics["+i+"]:location:latitude",trackModel.trackList.get(i).latitude);
+            test.putDouble("fitness:metrics["+i+"]:location:longitude",trackModel.trackList.get(i).longitude);
         }
 
 

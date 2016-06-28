@@ -157,7 +157,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Put Call share here like: shareController.share(trackCollection.trackCollectionList.get(position);
-
+                                shareController shareController = new shareController(MapsActivity.this, trackCollection.trackCollectionList.get(position));
+                                shareController.shareTrack();
                                 dialog.cancel();
                                 listPopupWindow.dismiss();
                             }
@@ -170,8 +171,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void shareTrack(View view){
-            shareController test = new shareController(this);
-            test.shareTrack();
+            //shareController test = new shareController();
+            //test.shareTrack();
     }
 
     public void startOrEndTrack(View view){
