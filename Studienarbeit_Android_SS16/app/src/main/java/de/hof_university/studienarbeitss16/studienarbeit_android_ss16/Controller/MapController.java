@@ -92,7 +92,7 @@ public class MapController {
         }
 
         // Set Camerabounds
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 250));
     }
 
     public void setMarker(String title, LatitudeLongitudeModel position){

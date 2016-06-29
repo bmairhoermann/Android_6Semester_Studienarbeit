@@ -61,7 +61,7 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.Trac
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AdapterView.OnItemClickListener, DialogSaveTrack.DialogSaveTrackListener {
+public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoadedCallback, OnMapReadyCallback, AdapterView.OnItemClickListener, DialogSaveTrack.DialogSaveTrackListener {
 
     // ViewElements
     private FloatingActionButton trackButton;
@@ -110,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
             }
         });
-        hideSpinnerProgress(true);
+        hideSpinnerProgressWithText(true, "");
 
 
         // Initialize listPopupWindow
@@ -137,6 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMapLoadedCallback(this);
 
         mapController = new MapController(mMap);
         trackController = new TrackController(mapController, this);
@@ -146,6 +147,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(displayGpsStatus()){}else {
             gpsAlertbox("GPS Status", "GPS ist: AUS");
         }
+    }
+
+    @Override
+    public void onMapLoaded(){
+        hideSpinnerProgressWithText(true, "");
     }
 
     // Called when User selects TrackListItem
@@ -178,8 +184,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AlertDialog alter = builder.create();
         alter.show();
 
-
-        mapController.showTrack(trackCollection.trackCollectionList.get(position));
+        Log.d("SIZE OF ARRAYLIST", "onItemClick: " + trackCollection.trackCollectionList.get(position).trackList.size());
     }
 
 
@@ -193,30 +198,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             trackController.endTrack();
             isTracking = false;
-            //trackButton.setText("Route starten");
-            hideSpinnerProgress(true);
+            hideSpinnerProgressWithText(true, "");
         }else {
             if (displayGpsStatus()) {
                 trackButton.setImageResource(R.drawable.ic_stop_black_24dp);
                 try {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0.5f, locationController);
+                    // Update every two Minutes, With a minimum distance of 200 meters -> Set for Motorcycle
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120000, 200, locationController);
                 }catch (SecurityException e){
                     Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
                 }
                 trackController.startTrack();
                 isTracking = true;
-                //trackButton.setText("Route beenden");
-                hideSpinnerProgress(false);
+                hideSpinnerProgressWithText(false, "GPS");
             }else{
                 gpsAlertbox("GPS Status", "GPS ist: AUS");
             }
             trackController.startTrack();
             isTracking = true;
-            //trackButton.setText("Route beenden");
-            hideSpinnerProgress(false);
-
         }
-
     }
 
     // Creates an Alterbox to inform User that GPS is diable
@@ -281,16 +281,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void hideSpinnerProgress(boolean b){
+    // Hides or shows the progress spinner with given Text
+    public void hideSpinnerProgressWithText(boolean b, String text){
         if(b){
             spinner.setVisibility(View.INVISIBLE);
             spinnerText.setVisibility(View.INVISIBLE);
         }else{
+            spinnerText.setText(text);
             spinner.setVisibility(View.VISIBLE);
             spinnerText.setVisibility(View.VISIBLE);
         }
     }
 
+    // Method for Saving TrackCollection
     private void writeTrackModelCollectionToMemory(TrackCollection tmp){
         FileOutputStream fileOutputStream;
         try {
@@ -307,6 +310,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    // Method for Loading TrackCollection
     private TrackCollection readTrackModelCollectionFromMemory(){
         FileInputStream fileInputStream;
         TrackCollection tmp = new TrackCollection();

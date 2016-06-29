@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".Activity.MapsActivity">
 
+    <!-- Buttons -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/trackButton"
         android:layout_width="wrap_content"
@@ -38,13 +39,15 @@
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="24dp"
         android:tint="@android:color/white"/>
+
+
+    <!--  Loading Indicator-->
     <ProgressBar
         android:id="@+id/spinnerProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
         style="@android:style/Widget.Holo.Light.ProgressBar.Large"/>
-
     <TextView
         android:id="@+id/spinnerText"
         android:background="#00000000"

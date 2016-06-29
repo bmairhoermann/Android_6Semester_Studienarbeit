@@ -67,7 +67,7 @@ public class TrackController {
     }
 
     public void updateUserPosition(LatitudeLongitudeModel latlng){
-        mapsActivity.hideSpinnerProgress(true);
+        mapsActivity.hideSpinnerProgressWithText(true, "");
         currentPosition = latlng;
 
         // Executed when Track starts and is running
