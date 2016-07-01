@@ -157,6 +157,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
     // Called when User selects TrackListItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
+        Intent intent = new Intent(MapsActivity.this, TrackDetailActivity.class);
+        startActivity(intent);
+        /*
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("")
                 .setCancelable(true)
@@ -183,7 +186,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
                         });
         AlertDialog alter = builder.create();
         alter.show();
-
+        */
         Log.d("SIZE OF ARRAYLIST", "onItemClick: " + trackCollection.trackCollectionList.get(position).trackList.size());
     }
 
