@@ -176,6 +176,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="24dp"
                 android:layout_marginRight="24dp"
+                android:onClick="updateName"
                 />
 
             <android.support.design.widget.FloatingActionButton
@@ -188,7 +189,8 @@
                 android:layout_marginLeft="24dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:onClick="deleteTrack"/>
 
         </RelativeLayout>
 

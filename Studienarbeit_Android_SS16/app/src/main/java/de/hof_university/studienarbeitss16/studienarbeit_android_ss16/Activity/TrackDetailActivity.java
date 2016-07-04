@@ -1,7 +1,10 @@
 package de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity;
 
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -15,5 +18,13 @@ public class TrackDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_track_detail);
+    }
+
+    public void updateName(View view){
+
+        Log.d("UpdateTrack","Button Pressed :-)");
+    }
+    public void deleteTrack(View view){
+        Log.d("Delete Track","Button Pressed :-)");
     }
 }
