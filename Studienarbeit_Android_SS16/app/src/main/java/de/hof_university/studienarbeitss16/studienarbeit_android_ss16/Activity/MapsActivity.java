@@ -4,9 +4,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
@@ -18,28 +15,13 @@ import android.util.Log;
 import android.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
-import com.facebook.share.model.*;
-import com.facebook.share.model.ShareOpenGraphAction;
-import com.facebook.share.model.ShareOpenGraphContent;
-import com.facebook.share.model.ShareOpenGraphObject;
-import com.facebook.share.widget.ShareDialog;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -51,12 +33,10 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.Adapter.TrackListAdapter;
-import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.Dialog.DialogSaveTrack;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity.Dialog.DialogSaveTrack;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.LocationController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.MapController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.TrackController;
-import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.shareController;
-import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackCollection;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
@@ -124,6 +104,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         trackListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                trackCollection = readTrackModelCollectionFromMemory();
                 listPopupWindow.setAdapter(new TrackListAdapter(MapsActivity.this, R.layout.list_item, (ArrayList<TrackModel>) trackCollection.trackCollectionList));
                 listPopupWindow.show();
             }
@@ -132,6 +113,10 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         // Get Persitency
         trackCollection = readTrackModelCollectionFromMemory();
     }
+
+    //##################################################################################
+    //############################__MapFunctions__######################################
+    //##################################################################################
 
      // This callback is triggered when the map is ready to be used.
     @Override
@@ -157,7 +142,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
     // Called when User selects TrackListItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
+        listPopupWindow.dismiss();
         Intent intent = new Intent(MapsActivity.this, TrackDetailActivity.class);
+        intent.putExtra("position", position);
         startActivity(intent);
         /*
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -187,7 +174,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         AlertDialog alter = builder.create();
         alter.show();
         */
-        Log.d("SIZE OF ARRAYLIST", "onItemClick: " + trackCollection.trackCollectionList.get(position).trackList.size());
     }
 
 
@@ -206,8 +192,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
             if (displayGpsStatus()) {
                 trackButton.setImageResource(R.drawable.ic_stop_black_24dp);
                 try {
-                    // Update every two Minutes, With a minimum distance of 200 meters -> Set for Motorcycle
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120000, 200, locationController);
+                    // TODO: Update every two Minutes(120000), With a minimum distance of 200 meters -> Set for Motorcycle
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 900, 0.5f, locationController);
                 }catch (SecurityException e){
                     Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
                 }
@@ -231,8 +217,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
                 .setPositiveButton("GPS AN",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // finish the current activity
-                                // AlertBoxAdvance.this.finish();
                                 Intent myIntent = new Intent(
                                         Settings.ACTION_SECURITY_SETTINGS);
                                 startActivity(myIntent);

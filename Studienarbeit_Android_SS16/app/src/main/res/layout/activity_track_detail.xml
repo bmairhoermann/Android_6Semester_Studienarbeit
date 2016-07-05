@@ -203,13 +203,22 @@
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:map="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/map"
+                    android:id="@+id/detailMap"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:context=".Activity.MapsActivity"
                     android:layout_gravity="bottom">
                 </fragment>
+
+                <TextView
+                    android:id="@+id/detailMapLoadingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Lade..."
+                    android:textStyle="bold"
+                    android:textSize="50dp"/>
             </FrameLayout>
         </TableRow>
 

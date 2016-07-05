@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_save_track"
+    android:id="@+id/fragment_edit_track"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/saveDialogEditText"
+        android:id="@+id/editDialogEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Trackname"/>
@@ -18,18 +18,18 @@
         android:orientation="horizontal">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/saveDialogDontSave"
+            android:id="@+id/editDialogDontSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
-            android:src="@drawable/ic_delete_black_24dp"
+            android:src="@drawable/ic_clear_black_24dp"
             android:tint="@android:color/white"
             android:padding="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"/>
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/saveDialogSave"
+            android:id="@+id/editDialogSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

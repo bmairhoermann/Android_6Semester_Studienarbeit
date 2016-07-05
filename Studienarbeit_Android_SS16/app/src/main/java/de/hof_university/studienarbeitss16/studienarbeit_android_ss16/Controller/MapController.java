@@ -74,27 +74,6 @@ public class MapController {
         }
     }
 
-    public void showTrack(TrackModel trackModel){
-        followUser = false;
-        clearMap();
-
-        // Set Markers
-        setMarker("Startpunkt", trackModel.firstPosition);
-        setMarker("Endpunkt", trackModel.lastPosition);
-
-        // Set Path and set up bounds
-        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
-        boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng());
-        boundsBuilder.include(trackModel.lastPosition.toGoogleLatLng());
-        for (int i=1; i < trackModel.trackList.size();i++){
-            map.addPolyline(new PolylineOptions().color(Color.RED).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
-            boundsBuilder.include(trackModel.trackList.get(i).toGoogleLatLng());
-        }
-
-        // Set Camerabounds
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 250));
-    }
-
     public void setMarker(String title, LatitudeLongitudeModel position){
         map.addMarker(new MarkerOptions().position(position.toGoogleLatLng()).title(title));
     }
