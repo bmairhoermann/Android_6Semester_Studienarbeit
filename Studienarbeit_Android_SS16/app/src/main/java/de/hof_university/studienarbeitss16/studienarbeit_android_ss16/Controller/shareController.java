@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity.MapsActivity;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity.TrackDetailActivity;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
 
@@ -24,7 +25,7 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.Trac
 public class ShareController {
 
     private int test;
-    private MapsActivity mapsActivity;
+    private TrackDetailActivity mapsActivity;
     private TrackModel trackModel;
 
     Location locationA = new Location("a");
@@ -32,7 +33,7 @@ public class ShareController {
     Location locationB = new Location("b");
 
 
-    public ShareController(MapsActivity mapsActivitym, TrackModel trackModel){
+    public ShareController(TrackDetailActivity mapsActivitym, TrackModel trackModel){
         this.mapsActivity = mapsActivitym;
         this.trackModel = trackModel;
     }
@@ -83,16 +84,7 @@ public class ShareController {
             Log.d("FLOAT:WERTE", "Entfernung: " + distance +" METER!" + "Entfernung:" +((distance/1000))+ " KILOMETER");
 
         }
-        /*
-        Location locationA = new Location("A");
-        locationA.setLongitude(personalTrackModel.firstPosition.longitude);
-        locationA.setLatitude(personalTrackModel.firstPosition.latitude);
-
-        Location locationB = new Location("B");
-        locationB.setLongitude(personalTrackModel.lastPosition.longitude);
-        locationB.setLatitude(personalTrackModel.lastPosition.latitude);
-         */
-
+        //Entfernung in Kilometern
         return (distance/1000);
     }
 
@@ -102,13 +94,13 @@ public class ShareController {
         duration =  (trackModel.trackList.get(trackModel.trackList.size()-1).timeStamp)-(trackModel.trackList.get(0).timeStamp);
 
         Log.d("Float: Werte", "calculateDuration: " + duration/1000);
-
+        //Entfernung in Stunden
         return (long)(duration/1000);
     }
 
     public double calculateSpeed(){
         double speed = 0.0;
-        speed = ((calculateDistance()*1000)/calculateDuration());
+        speed = ((calculateDistance())/calculateDuration());
         return speed;
     }
 

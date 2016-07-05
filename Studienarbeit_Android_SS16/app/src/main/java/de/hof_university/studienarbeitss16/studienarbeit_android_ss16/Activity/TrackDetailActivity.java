@@ -69,14 +69,17 @@ public class TrackDetailActivity extends AppCompatActivity implements GoogleMap.
         TrackCollection tmpCollection = readTrackModelCollectionFromMemory();
         track = tmpCollection.trackCollectionList.get(position);
 
-
+        displayStatics();
     }
     //##################################################################################
     //############################__ButtonFunctions__###################################
     //##################################################################################
 
-    public void displayStatics(View view){
-
+    public void displayStatics(){
+        ShareController cs = new ShareController(this, track);
+        meterTextView.setText(Double.toString(cs.calculateDistance()).substring(0,4) + " km");
+        minutesTextView.setText(Long.toString(cs.calculateDuration())+ " min");
+        averageTextView.setText(Double.toString(cs.calculateSpeed()).substring(0,4) + " km/h");
 
 
     }

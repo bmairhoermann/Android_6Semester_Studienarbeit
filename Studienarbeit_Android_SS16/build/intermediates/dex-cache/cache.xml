@@ -5,7 +5,7 @@
         jar="/Users/philippwinterholler/Desktop/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="800c0cf618fa4d3b393658b19851f62807d139f2">
+        sha1="4f81653e931f7d5318c3f78aeacc5b85b17d6fb8">
         <dex dex="/Users/philippwinterholler/Desktop/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_399b5efe0d86c2c80271c7bfe5c7d51449491bcf/classes.dex" />
     </item>
     <item
@@ -250,7 +250,7 @@
         jar="/Users/philippwinterholler/Desktop/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="f4e64c2e1b697f2bf1102bb3b87235f9498457c3">
+        sha1="2a09c9e9774b8ea59553b33b396f45979d948b52">
         <dex dex="/Users/philippwinterholler/Desktop/Android_6Semester_Studienarbeit/Studienarbeit_Android_SS16/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_4d23485ad16001e2aa9832ed29c0358a9e831367/classes.dex" />
     </item>
     <item
