@@ -84,7 +84,7 @@ public class TrackDetailActivity extends AppCompatActivity implements GoogleMap.
                                 tmpCollection.trackCollectionList.remove(position);
                                 writeTrackModelCollectionToMemory(tmpCollection);
                                 dialog.cancel();
-                                //TODO: GO BACK TO MAINMAP!!
+                                finish();
                             }
                         })
                 .setNegativeButton("Nein",

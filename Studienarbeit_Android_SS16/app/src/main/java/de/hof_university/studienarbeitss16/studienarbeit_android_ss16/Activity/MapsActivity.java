@@ -43,6 +43,10 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.R;
 
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoadedCallback, OnMapReadyCallback, AdapterView.OnItemClickListener, DialogSaveTrack.DialogSaveTrackListener {
 
+    //##################################################################################
+    //############################__Class_Variables__###################################
+    //##################################################################################
+
     // ViewElements
     private FloatingActionButton trackButton;
     private ProgressBar spinner;
@@ -139,6 +143,11 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         hideSpinnerProgressWithText(true, "");
     }
 
+
+    //##################################################################################
+    //############################__View_Element_Controls__############################
+    //##################################################################################
+
     // Called when User selects TrackListItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
@@ -208,6 +217,18 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         }
     }
 
+    // Hides or shows the progress spinner with given Text
+    public void hideSpinnerProgressWithText(boolean b, String text){
+        if(b){
+            spinner.setVisibility(View.INVISIBLE);
+            spinnerText.setVisibility(View.INVISIBLE);
+        }else{
+            spinnerText.setText(text);
+            spinner.setVisibility(View.VISIBLE);
+            spinnerText.setVisibility(View.VISIBLE);
+        }
+    }
+
     // Creates an Alterbox to inform User that GPS is diable
     private void gpsAlertbox(String title, String mymessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -249,15 +270,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         }
     }
 
-    // Called when TrackController finished a Track
-    public void addTrackModel(TrackModel trackModel){
-        // Call dialog for naming the Track
-        FragmentManager fm = getSupportFragmentManager();
-        DialogSaveTrack dialogSaveTrack = new DialogSaveTrack();
-        dialogSaveTrack.show(fm, "fragment_save_track");
-        newTrackModel = trackModel;
-    }
-
     // Called by DialogSaveTrack when User is done
     @Override
     public void onFinishSaveDialog(boolean save, String title){
@@ -268,17 +280,23 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         }
     }
 
-    // Hides or shows the progress spinner with given Text
-    public void hideSpinnerProgressWithText(boolean b, String text){
-        if(b){
-            spinner.setVisibility(View.INVISIBLE);
-            spinnerText.setVisibility(View.INVISIBLE);
-        }else{
-            spinnerText.setText(text);
-            spinner.setVisibility(View.VISIBLE);
-            spinnerText.setVisibility(View.VISIBLE);
-        }
+    //##################################################################################
+    //############################__Other_Functions__###################################
+    //##################################################################################
+
+    // Called when TrackController finished a Track
+    public void addTrackModel(TrackModel trackModel){
+        // Call dialog for naming the Track
+        FragmentManager fm = getSupportFragmentManager();
+        DialogSaveTrack dialogSaveTrack = new DialogSaveTrack();
+        dialogSaveTrack.show(fm, "fragment_save_track");
+        newTrackModel = trackModel;
     }
+
+
+    //##################################################################################
+    //############################__PersistencyFunctions__##############################
+    //##################################################################################
 
     // Method for Saving TrackCollection
     private void writeTrackModelCollectionToMemory(TrackCollection tmp){
