@@ -159,8 +159,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:id="@+id/button4"
-
+                android:id="@+id/shareButton"
+                android:onClick="share"
                 android:layout_alignBottom="@+id/editButton"
                 android:layout_centerHorizontal="true" />
 

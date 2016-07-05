@@ -94,7 +94,7 @@ public class ShareController {
         duration =  (trackModel.trackList.get(trackModel.trackList.size()-1).timeStamp)-(trackModel.trackList.get(0).timeStamp);
 
         Log.d("Float: Werte", "calculateDuration: " + duration/1000);
-        //Entfernung in Stunden
+        //Entfernung in Sekunden
         return (long)(duration/1000);
     }
 
@@ -115,50 +115,25 @@ public class ShareController {
         return highspeed;
     }
     public void shareTrack(){
-
-
-        /*
-        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
-                .putString("og:type","fitness.course")
-                .putString("og:title","Motorrad Tour")
-                .putString("og:description","Ist mit der GPS-Tracker App eine Motorrad Tour gefahren")
-                //Dauer
-                .putInt("fitness:duration:value",10)
-                .putString("fitness:duration:units", "s")
-                //Entfernung
-                .putInt("fitness:distance:value",122)
-                .putString("fitness:distance:units","km")
-
-                //Geschwindigkeit
-
-                .putDouble("fitness:speed:value",10.21)
-                .putString("fitness:speed:units","m/s")
-
-       .putDouble("fitness:metrics["+0+"]:location:latitude",10.1023912)
-       .putDouble("fitness:metrics["+0+"]:location:longitude",11.9905178)
-
-
-
-            .build();
-*/
-
         ShareOpenGraphObject.Builder test = new ShareOpenGraphObject.Builder();
-                test.putString("og:type","fitness.course");
-                test.putString("og:title","Motorrad Tour");
-            test.putString("og:description","Ist mit der GPS-Tracker App eine Motorrad Tour gefahren");
+                //
+        test.putString("og:type","fitness.course");
+        test.putString("og:title","Motorrad Tour");
+        test.putString("og:description","Ist mit der GPS-Tracker App eine Motorrad Tour gefahren");
                 //Dauer
         test.putLong("fitness:duration:value",calculateDuration());
         test.putString("fitness:duration:units", "s");
 
                 //Entfernung
         test.putDouble("fitness:distance:value",calculateDistance());
-       
         test.putString("fitness:distance:units","km");
 
                 //Geschwindigkeit
 
         test.putDouble("fitness:speed:value",calculateSpeed());
         test.putString("fitness:speed:units","m/s");
+
+        // Wegpunkte
         for(int i = 0; i < trackModel.trackList.size();  i++){
             test.putDouble("fitness:metrics["+i+"]:location:latitude",trackModel.trackList.get(i).latitude);
             test.putDouble("fitness:metrics["+i+"]:location:longitude",trackModel.trackList.get(i).longitude);
