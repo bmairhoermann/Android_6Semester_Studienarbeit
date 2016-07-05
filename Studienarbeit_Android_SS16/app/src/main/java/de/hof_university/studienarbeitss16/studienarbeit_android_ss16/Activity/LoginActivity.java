@@ -10,13 +10,19 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -29,6 +35,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import com.facebook.FacebookSdk;
+
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,6 +54,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ProgressDialog mProgressDialog;
 
     private  LoginButton facebookLoginButton;
+    private TextView userNameTextView;
+    private ProfilePictureView profilePictureView;
     private CallbackManager callbackManager;
 
     @Override
@@ -109,6 +119,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         //**********************************Facebook*********************************
         AppEventsLogger.activateApp(this);
 
+        profilePictureView = (ProfilePictureView) findViewById(R.id.facebookUserPictureView);
+        userNameTextView = (TextView) findViewById(R.id.facebookUserNameText);
         callbackManager = CallbackManager.Factory.create();
         facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
         List<String> permissions = new ArrayList<String>();
@@ -116,11 +128,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         permissions.add("email");
         facebookLoginButton.setReadPermissions(permissions);
 
+        //If User is already logged in
+        try {
+            profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
+            userNameTextView.setText(Profile.getCurrentProfile().getName());
+        }catch (Exception e){
+
+        }
+
         // Callback registration
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "onSuccess: Facebooklogin success");
+                profilePictureView.setProfileId(loginResult.getAccessToken().getUserId());
+
+                GraphRequestAsyncTask request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject user, GraphResponse graphResponse) {
+                        userNameTextView.setText(user.optString("name"));
+                    }
+                }).executeAsync();
             }
 
             @Override
