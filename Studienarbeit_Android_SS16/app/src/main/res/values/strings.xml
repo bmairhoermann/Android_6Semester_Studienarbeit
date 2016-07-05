@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bike Tracke</string>
+    <string name="app_name">Bike Tracker</string>
     <string name="title_activity_maps">Bike Tracker</string>
     <string name="facebook_app_id">1693852150866951</string>
     <string name="FILENAME">PersitencyTrack</string>
