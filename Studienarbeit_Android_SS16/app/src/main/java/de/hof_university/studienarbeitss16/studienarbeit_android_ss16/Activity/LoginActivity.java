@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private TextView userNameTextView;
     private ProfilePictureView profilePictureView;
     private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +163,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.d(TAG, "onError: Facebooklogin error");
             }
         });
+
+        //What do when the user loggs out
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                if (currentAccessToken == null){
+                    profilePictureView.setProfileId(null);
+                    userNameTextView.setText("");
+                }
+            }
+        };
         //************************************Facebook End************************************
     }
 
