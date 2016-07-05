@@ -116,19 +116,19 @@ public class ShareController {
     }
     public void shareTrack(){
         ShareOpenGraphObject.Builder test = new ShareOpenGraphObject.Builder();
-                //
+        //
         test.putString("og:type","fitness.course");
         test.putString("og:title","Motorrad Tour");
         test.putString("og:description","Ist mit der GPS-Tracker App eine Motorrad Tour gefahren");
-                //Dauer
+        //Dauer
         test.putLong("fitness:duration:value",calculateDuration());
         test.putString("fitness:duration:units", "s");
 
-                //Entfernung
+        //Entfernung
         test.putDouble("fitness:distance:value",calculateDistance());
         test.putString("fitness:distance:units","km");
 
-                //Geschwindigkeit
+        //Geschwindigkeit
 
         test.putDouble("fitness:speed:value",calculateSpeed());
         test.putString("fitness:speed:units","m/s");
