@@ -166,8 +166,18 @@ public class TrackDetailActivity extends AppCompatActivity implements GoogleMap.
         boundsBuilder.include(trackModel.firstPosition.toGoogleLatLng());
         boundsBuilder.include(trackModel.lastPosition.toGoogleLatLng());
         for (int i=1; i < trackModel.trackList.size();i++){
-            detailmap.addPolyline(new PolylineOptions().color(Color.RED).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
-            boundsBuilder.include(trackModel.trackList.get(i).toGoogleLatLng());
+            // Drawline: Below 60 km/h = green, between 60 and 120 km/h = yellow, above 120 km/h = red
+            if(trackModel.trackList.get(i).speed <17) {
+                detailmap.addPolyline(new PolylineOptions().color(Color.GREEN).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
+                boundsBuilder.include(trackModel.trackList.get(i).toGoogleLatLng());
+            }else if (trackModel.trackList.get(i).speed > 17 && trackModel.trackList.get(i).speed < 33){
+                detailmap.addPolyline(new PolylineOptions().color(Color.YELLOW).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
+                boundsBuilder.include(trackModel.trackList.get(i).toGoogleLatLng());
+            }else {
+                detailmap.addPolyline(new PolylineOptions().color(Color.RED).width(10).add(trackModel.trackList.get(i-1).toGoogleLatLng(), trackModel.trackList.get(i).toGoogleLatLng()));
+                boundsBuilder.include(trackModel.trackList.get(i).toGoogleLatLng());
+            }
+
         }
 
         // Set Camerabounds

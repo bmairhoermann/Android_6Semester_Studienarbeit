@@ -59,17 +59,22 @@ public class MapController {
 
         // Linedrawing
         if(drawLine){
-            // TODO: Discuss Color for Speed
-            if(position.speed <1.5) {
-                map.addPolyline(new PolylineOptions()
-                        .add(lastPosition.toGoogleLatLng(), currentPosition.toGoogleLatLng())
-                        .width(10)
-                        .color(Color.BLUE));
-            }else{
+            // Drawline: Below 60 km/h = green, between 60 and 120 km/h = yellow, above 120 km/h = red
+            if(position.speed <17) {
                 map.addPolyline(new PolylineOptions()
                         .add(lastPosition.toGoogleLatLng(), currentPosition.toGoogleLatLng())
                         .width(10)
                         .color(Color.GREEN));
+            }else if (position.speed > 17 && position.speed < 33){
+                map.addPolyline(new PolylineOptions()
+                        .add(lastPosition.toGoogleLatLng(), currentPosition.toGoogleLatLng())
+                        .width(10)
+                        .color(Color.YELLOW));
+            }else {
+                map.addPolyline(new PolylineOptions()
+                        .add(lastPosition.toGoogleLatLng(), currentPosition.toGoogleLatLng())
+                        .width(10)
+                        .color(Color.RED));
             }
         }
     }

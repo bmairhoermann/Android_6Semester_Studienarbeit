@@ -155,34 +155,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         Intent intent = new Intent(MapsActivity.this, TrackDetailActivity.class);
         intent.putExtra("position", position);
         startActivity(intent);
-        /*
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("")
-                .setCancelable(true)
-                .setTitle(trackCollection.trackCollectionList.get(position).title)
-                .setPositiveButton("Anzeigen",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mapController.showTrack(trackCollection.trackCollectionList.get(position));
-                                dialog.cancel();
-                                listPopupWindow.dismiss();
-                            }
-                        })
-                .setNegativeButton("Auf Facebook teilen",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Put Call share here like: ShareController.share(trackCollection.trackCollectionList.get(position);
-                                ShareController ShareController = new ShareController(MapsActivity.this, trackCollection.trackCollectionList.get(position));
-                                ShareController.shareTrack();
-                                dialog.cancel();
-                                listPopupWindow.dismiss();
-                            }
-                        });
-        AlertDialog alter = builder.create();
-        alter.show();
-        */
     }
 
 
@@ -201,8 +173,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
             if (displayGpsStatus()) {
                 trackButton.setImageResource(R.drawable.ic_stop_black_24dp);
                 try {
-                    // TODO: Update every two Minutes(120000), With a minimum distance of 200 meters -> Set for Motorcycle
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 900, 0.5f, locationController);
+                    // Update every 30 seconds(30000), With a minimum distance of 200 meters -> Set for Motorcycle
+                    // Calculated with an average speed of 60 km/h -> 17 m/s
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 200, locationController);
                 }catch (SecurityException e){
                     Log.d("MapsActivity", "onMapReady: Not able to request location updates with Exception: " + e.toString());
                 }
@@ -277,6 +250,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
             newTrackModel.title = title;
             trackCollection.trackCollectionList.add(newTrackModel);
             writeTrackModelCollectionToMemory(trackCollection);
+            Intent intent = new Intent(MapsActivity.this, TrackDetailActivity.class);
+            intent.putExtra("position", trackCollection.trackCollectionList.size()-1);
+            startActivity(intent);
         }
     }
 

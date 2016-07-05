@@ -52,7 +52,6 @@ public class TrackController {
                 }
             }
             mapController.clearMap();
-            //TODO: Decide whether to show track after Recording or not?
             mapsActivity.addTrackModel(trackModel);
 
             //System.out for Track
