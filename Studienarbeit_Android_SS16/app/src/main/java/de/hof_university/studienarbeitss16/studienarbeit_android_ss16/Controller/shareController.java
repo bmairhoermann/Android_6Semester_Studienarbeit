@@ -103,7 +103,17 @@ public class ShareController {
         speed = ((calculateDistance())/calculateDuration());
         return speed;
     }
+    public double highSpeed(){
+        double highspeed = 0.0;
+        for (int i = 0 ; i < trackModel.trackList.size()-1;i++) {
+            double tempSpeed = trackModel.trackList.get(i).speed;
+            if (tempSpeed > highspeed){
+                highspeed = tempSpeed;
+            }
 
+        }
+        return highspeed;
+    }
     public void shareTrack(){
 
 

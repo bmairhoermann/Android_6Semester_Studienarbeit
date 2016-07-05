@@ -78,9 +78,9 @@ public class TrackDetailActivity extends AppCompatActivity implements GoogleMap.
     public void displayStatics(){
         ShareController cs = new ShareController(this, track);
         meterTextView.setText(Double.toString(cs.calculateDistance()).substring(0,4) + " km");
-        minutesTextView.setText(Long.toString(cs.calculateDuration())+ " min");
+        minutesTextView.setText(Long.toString(cs.calculateDuration()/60)+ " min");
         averageTextView.setText(Double.toString(cs.calculateSpeed()).substring(0,4) + " km/h");
-
+        highSpeedTextView.setText(Double.toString(cs.highSpeed()).substring(0,4) + " km/h");
 
     }
 
