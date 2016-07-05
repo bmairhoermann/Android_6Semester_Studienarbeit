@@ -21,7 +21,7 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.Trac
 /**
  * Created by philippwinterholler on 26.06.16.
  */
-public class shareController {
+public class ShareController {
 
     private int test;
     private MapsActivity mapsActivity;
@@ -32,7 +32,7 @@ public class shareController {
     Location locationB = new Location("b");
 
 
-    public shareController(MapsActivity mapsActivitym, TrackModel trackModel){
+    public ShareController(MapsActivity mapsActivitym, TrackModel trackModel){
         this.mapsActivity = mapsActivitym;
         this.trackModel = trackModel;
     }

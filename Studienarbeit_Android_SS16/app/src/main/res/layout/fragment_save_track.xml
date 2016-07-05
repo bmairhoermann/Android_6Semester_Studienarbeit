@@ -11,34 +11,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Trackname"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:weightSum="1">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/saveDialogDontSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
             android:src="@drawable/ic_delete_black_24dp"
             android:tint="@android:color/white"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"/>
+
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="24dp"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+
+
+            />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/saveDialogSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
             android:src="@drawable/ic_done_black_24dp"
             android:tint="@android:color/white"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginBottom="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="24dp"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
+
+
 
     </LinearLayout>
 

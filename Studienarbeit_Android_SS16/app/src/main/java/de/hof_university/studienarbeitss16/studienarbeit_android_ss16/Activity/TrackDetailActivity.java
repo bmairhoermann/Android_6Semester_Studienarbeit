@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.w3c.dom.Text;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,6 +28,7 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Activity.Dialog.DialogEditTrack;
+import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Controller.ShareController;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.LatitudeLongitudeModel;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackCollection;
 import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.TrackModel;
@@ -40,6 +43,11 @@ public class TrackDetailActivity extends AppCompatActivity implements GoogleMap.
     //View Elements
     private TextView loadingText;
 
+    private TextView meterTextView;
+    private TextView minutesTextView;
+    private TextView averageTextView;
+    private TextView highSpeedTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +59,24 @@ public class TrackDetailActivity extends AppCompatActivity implements GoogleMap.
         mapFragment.getMapAsync(this);
 
         loadingText = (TextView)findViewById(R.id.detailMapLoadingText);
+        meterTextView = (TextView)findViewById(R.id.textViewMeter);
+        minutesTextView = (TextView)findViewById(R.id.textViewMinutes);
+        averageTextView = (TextView) findViewById(R.id.textViewAverageSpeed);
+        highSpeedTextView =(TextView) findViewById(R.id.textViewHighSpeed);
 
         position = getIntent().getIntExtra("position", 0);
 
         TrackCollection tmpCollection = readTrackModelCollectionFromMemory();
         track = tmpCollection.trackCollectionList.get(position);
+
+
+    }
+    //##################################################################################
+    //############################__ButtonFunctions__###################################
+    //##################################################################################
+
+    public void displayStatics(View view){
+
 
 
     }

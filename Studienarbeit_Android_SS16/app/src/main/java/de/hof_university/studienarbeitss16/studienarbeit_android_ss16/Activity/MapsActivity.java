@@ -173,9 +173,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Put Call share here like: shareController.share(trackCollection.trackCollectionList.get(position);
-                                shareController shareController = new shareController(MapsActivity.this, trackCollection.trackCollectionList.get(position));
-                                shareController.shareTrack();
+                                // Put Call share here like: ShareController.share(trackCollection.trackCollectionList.get(position);
+                                ShareController ShareController = new ShareController(MapsActivity.this, trackCollection.trackCollectionList.get(position));
+                                ShareController.shareTrack();
                                 dialog.cancel();
                                 listPopupWindow.dismiss();
                             }
