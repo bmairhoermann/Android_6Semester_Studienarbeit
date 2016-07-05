@@ -90,7 +90,7 @@
                     android:layout_width="195dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Durchschnittsgeschwindigkeit:"
+                    android:text="Ø-Geschwindigkeit: "
                     android:id="@+id/textView6"
                     android:layout_weight="0.58" />
 
