@@ -24,47 +24,16 @@ import de.hof_university.studienarbeitss16.studienarbeit_android_ss16.Model.Trac
  */
 public class ShareController {
 
-    private int test;
     private TrackDetailActivity mapsActivity;
     private TrackModel trackModel;
-
-    Location locationA = new Location("a");
-
-    Location locationB = new Location("b");
-
 
     public ShareController(TrackDetailActivity mapsActivitym, TrackModel trackModel){
         this.mapsActivity = mapsActivitym;
         this.trackModel = trackModel;
     }
 
-    public TrackModel check(){
-        TrackModel trackModel = new TrackModel();
-
-        trackModel.title = "MyFirstTrack";
-        trackModel.firstPosition = new LatitudeLongitudeModel(50.32578791, 11.9195146, 0.0f, 1466951089000l);
-        trackModel.lastPosition = new LatitudeLongitudeModel(50.32578791, 11.9195146, 0.0f, 1466951098000l+4104000l);
-        /*
-        Firstposition: 50.32578791, 11.94006134, speed: 0.0, time 1466951089000
-        Lastposition: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
-        Listitem: 50.32578791, 11.94006134, speed: 0.0, time 1466951089000
-        Listitem: 50.3257799, 11.94005303, speed: 0.0, time 1466951090000
-        Listitem: 50.32577574, 11.9400563, speed: 1.031746, time 1466951091000
-        Listitem: 50.32576825, 11.94003625, speed: 0.0, time 1466951092000
-        Listitem: 50.32576173, 11.94001859, speed: 0.0, time 1466951094000
-        Listitem: 50.32576763, 11.94003366, speed: 0.0, time 1466951096000
-        Listitem: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
-        Listitem: 50.32576226, 11.94002498, speed: 0.0, time 1466951098000
-            */
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.3179066, 11.9195146, 0.0f, 1466951089000l));
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.3179066, 11.9115146, 0.0f, 1466951091000l));
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.3257799, 11.94005303, 1.02f, 1466951095000l));
-        trackModel.trackList.add(new LatitudeLongitudeModel(50.3257799, 12.94005303, 1.02f, 1466951095000l));
-        return trackModel;
-
-    }
+    
     public double calculateDistance(){
-        //TrackModel personalTrackModel = trackModel;
 
         double distance = 0;
 

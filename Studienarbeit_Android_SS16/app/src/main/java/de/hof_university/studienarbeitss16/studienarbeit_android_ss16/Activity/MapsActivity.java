@@ -128,6 +128,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
         mMap = googleMap;
         mMap.setOnMapLoadedCallback(this);
 
+		// Instantiate Controllers for tracking
         mapController = new MapController(mMap);
         trackController = new TrackController(mapController, this);
         locationController = new LocationController(trackController, mapController);

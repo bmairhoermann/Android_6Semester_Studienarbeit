@@ -324,11 +324,4 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             findViewById(R.id.google_disconnect_button).setVisibility(View.INVISIBLE);
         }
     }
-
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
-
-
 }
