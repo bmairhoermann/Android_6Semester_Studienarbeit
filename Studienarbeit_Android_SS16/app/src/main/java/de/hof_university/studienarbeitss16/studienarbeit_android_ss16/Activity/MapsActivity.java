@@ -160,6 +160,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
 
     public void startOrEndTrack(View view){
         if(isTracking){
+            // Enable other Buttons
+            loginButton.setEnabled(true);
+            trackListButton.setEnabled(true);
             trackButton.setImageResource(R.drawable.ic_play_arrow_black_24dp);
             try {
                 locationManager.removeUpdates(locationController);
@@ -171,6 +174,10 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
             hideSpinnerProgressWithText(true, "");
         }else {
             if (displayGpsStatus()) {
+                // Disable other Buttons
+                loginButton.setEnabled(false);
+                trackListButton.setEnabled(false);
+
                 trackButton.setImageResource(R.drawable.ic_stop_black_24dp);
                 try {
                     // Update every 30 seconds(30000), With a minimum distance of 200 meters -> Set for Motorcycle
