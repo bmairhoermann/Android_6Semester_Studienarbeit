@@ -193,8 +193,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMapLoa
             }else{
                 gpsAlertbox("GPS Status", "GPS ist: AUS");
             }
-            trackController.startTrack();
-            isTracking = true;
         }
     }
 
